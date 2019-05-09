@@ -1,0 +1,34 @@
+<idea-plugin>
+    <id>andrasferenczi.dart-data-plugin</id>
+    <name>Plugin display name here</name>
+    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <depends>Dart</depends>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="MyPlugin.TestMeu" text="Greeting kotlin" description="Greeting menu kot">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="Myplugin.Textboxes" class="andrasferenczi.HelloAction" text="Hello" description="Says hello"/>
+        </group>
+        <action id="andrasferenczi.DartCopyWithAction" class="andrasferenczi.DartCopyWithAction" text="copyWith"
+                description="Generate copyWith method">
+            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="Generate.Named.Constructor.Dart"/>
+        </action>
+    </actions>
+</idea-plugin>
