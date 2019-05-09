@@ -12,6 +12,9 @@ enum class DeclarationModifier(val text: String) {
             .map { it.text }
             .toSet()
 
+        val textMap: Map<String, DeclarationModifier> = DeclarationModifier
+            .values()
+            .associateBy({ it.text }, { it })
 
     }
 }

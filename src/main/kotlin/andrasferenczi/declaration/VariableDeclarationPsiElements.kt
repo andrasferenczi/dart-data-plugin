@@ -5,6 +5,7 @@ import com.jetbrains.lang.dart.psi.DartComponentName
 import com.jetbrains.lang.dart.psi.DartType
 import com.jetbrains.lang.dart.psi.DartVarAccessDeclaration
 import com.jetbrains.lang.dart.psi.DartVarInit
+import java.lang.RuntimeException
 
 // DartVarAccessDeclaration can not be null
 // DartType can be null
@@ -15,3 +16,21 @@ class VariableDeclarationPsiElements(
     val name: DartComponentName,
     val initializer: DartVarInit?
 )
+
+fun VariableDeclarationPsiElements.hasModifier(modifier: DeclarationModifier): Boolean {
+    return modifiers.find { it.text == modifier.text } !== null
+}
+
+val VariableDeclarationPsiElements.hasInitializer: Boolean
+    get() = initializer !== null
+
+val VariableDeclarationPsiElements.variableName: String
+    get() = name.name ?: throw RuntimeException("Encountered a variable which does not have a name.")
+
+val VariableDeclarationPsiElements.canBeAssignedFromConstructor: Boolean
+    get() {
+        val isStatic = hasModifier(DeclarationModifier.Static)
+        val isFinal = hasModifier(DeclarationModifier.Final)
+
+        return !isStatic && ((isFinal && !hasInitializer) || !isFinal)
+    }
