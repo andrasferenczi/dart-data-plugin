@@ -11,6 +11,10 @@ fun PsiElement.allChildren(): List<PsiElement> {
     return firstChild?.siblings()?.toList() ?: emptyList()
 }
 
+fun PsiElement.calculateGlobalOffset(): Int {
+    return this.startOffsetInParent + (this.parent?.startOffsetInParent ?: 0)
+}
+
 inline fun <reified T : PsiElement> PsiElement.findFirstParentOfType(): T? {
     var current: PsiElement? = this
 

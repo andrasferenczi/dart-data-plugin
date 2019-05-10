@@ -7,16 +7,18 @@ object DartDataCodeGenerator {
         variableNames: List<String>
     ): String {
         return buildString {
+            append("\n")
             append(className)
             append("({")
+            append("\n")
 
             variableNames.forEach {
                 append("this.$it,")
-                append(System.lineSeparator())
+                append("\n")
             }
 
-            append("})")
-            append(System.lineSeparator())
+            append("});")
+            append("\n")
         }
     }
 

@@ -12,11 +12,16 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.ui.Messages
+import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElementFactory
 import com.intellij.psi.PsiFileFactory
+import com.intellij.psi.codeStyle.CodeStyleManager
+import com.intellij.psi.codeStyle.CodeStyleSettings
+import com.intellij.psi.impl.source.codeStyle.CodeFormatterFacade
 import com.jetbrains.lang.dart.DartFileTypeFactory
 import com.jetbrains.lang.dart.DartLanguage
 import com.jetbrains.lang.dart.DartParser
+import com.jetbrains.lang.dart.ide.generation.DartGenerateToStringAction
 import com.jetbrains.lang.dart.psi.DartClassDefinition
 import com.jetbrains.lang.dart.psi.DartComponentName
 import com.jetbrains.lang.dart.psi.DartFile
@@ -26,6 +31,10 @@ import groovyjarjarantlr.CodeGenerator
 import org.jetbrains.java.generate.element.ElementFactory
 
 class DartCopyWithAction : AnAction("Dart Data") {
+
+    override fun update(e: AnActionEvent) {
+        super.update(e)
+    }
 
     override fun actionPerformed(event: AnActionEvent) {
         // Can return from here, error messages are handled
@@ -66,7 +75,33 @@ class DartCopyWithAction : AnAction("Dart Data") {
             variableNames
         )
 
+//        PsiFileFactory.getInstance(project)
+//            .createFileFromText(Da)
+
+        WriteCommandAction.runWriteCommandAction(project) {
+            val existingConstructor = dartClassBody.findMethodsByName(dartClassName).firstOrNull()
+
+            // Todo: Not really working
+            val offset = existingConstructor?.calculateGlobalOffset()
+                ?: editor.caretModel.currentCaret.offset
+
+            existingConstructor?.delete()
+
+            editor.document.insertString(offset, generatedConstructor)
+
+//            CodeStyleManager.getInstance(project)
+//                .reformatText(editor.document.)
+//
+//            val documentManager = PsiDocumentManager.getInstance(project)
+
+            PsiDocumentManager.getInstance(project)
+                .doPostponedOperationsAndUnblockDocument(editor.document)
+        }
+
+//        PsiElementFactory.SERVICE.getInstance(project).createMethodFromText()
+
         Messages.showMessageDialog(project, "Everything is awesome", "Yeah", Messages.getInformationIcon())
     }
+
 
 }
