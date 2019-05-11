@@ -16,7 +16,7 @@ fun DartClassDefinition.extractClassName(): String =
         ?.text
         ?: throw DartFileNotWellFormattedException("Dart class definition does not have a class name")
 
-fun DartClassDefinition.listMethods(): List<DartMethodDeclaration> = findChildrenByType()
+fun DartClassDefinition.listMethods(): Sequence<DartMethodDeclaration> = findChildrenByType()
 
-fun DartClassDefinition.findMethodsByName(name: String): List<DartMethodDeclaration> =
+fun DartClassDefinition.findMethodsByName(name: String): Sequence<DartMethodDeclaration> =
     listMethods().filter { it.name == name }

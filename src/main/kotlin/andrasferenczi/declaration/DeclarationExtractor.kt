@@ -3,6 +3,7 @@ package andrasferenczi.declaration
 import andrasferenczi.DartFileNotWellFormattedException
 import andrasferenczi.ext.psi.allChildren
 import andrasferenczi.ext.psi.findChildrenByType
+import andrasferenczi.ext.psi.findFirstChildByType
 import andrasferenczi.ext.psi.iterateDFS
 import andrasferenczi.utils.split
 import com.intellij.psi.PsiElement
@@ -19,7 +20,7 @@ private val VARIABLE_DECLARATION_SEPARATORS = setOf(",", ";")
 private fun DartVarDeclarationList.extractDeclarations(): List<PsiElement> {
 
     val values: MutableList<PsiElement> = LinkedList()
-
+    // Todo: Convert this to the sequence-version
     iterateDFS {
         // Do not evaluate the type declaration
         // A comma might come earlier (which belongs to the type) than the first name
@@ -61,19 +62,14 @@ private fun DartVarDeclarationList.extractDeclarationNameAndInitializer(): List<
 
 private fun DartVarDeclarationList.extractVarAccessDeclaration(): DartVarAccessDeclaration? {
     // DartVarAccessDeclaration has the type and if the variable is final
-    val types = findChildrenByType<DartVarAccessDeclaration>()
-
-    if (types.isEmpty()) {
-        return null
-    }
-
-    val (type) = types
-    return type
+    return findFirstChildByType()
 }
 
-private fun DartVarAccessDeclaration.extractModifiers(): List<LeafPsiElement> {
-    return allChildren()
-        .filterIsInstance<LeafPsiElement>()
+/**
+ * Todo: This is a slow function, since all elements are checked. Should check only around function declarations.
+ */
+private fun DartVarAccessDeclaration.extractModifiers(): Sequence<LeafPsiElement> {
+    return findChildrenByType<LeafPsiElement>()
         .filter { it.text in DeclarationModifier.textSet }
 }
 
@@ -92,7 +88,7 @@ private fun DartVarDeclarationList.extractEntireDeclarations(): List<VariableDec
             "No access declaration could be found for a variable. Is the document well-formatted?"
         )
 
-    val modifiers = accessDeclaration.extractModifiers()
+    val modifiers = accessDeclaration.extractModifiers().toList()
     val type = accessDeclaration.extractType()
 
     val declarations = extractDeclarationNameAndInitializer()
@@ -110,7 +106,8 @@ private fun DartVarDeclarationList.extractEntireDeclarations(): List<VariableDec
 object DeclarationExtractor {
 
     fun extractDeclarationsFromClass(dartClass: DartClassDefinition): List<VariableDeclarationPsiElements> {
-        val declarations = dartClass.findChildrenByType<DartVarDeclarationList>()
+        // Todo: Probably some type of max depth would be useful
+        val declarations = dartClass.findChildrenByType<DartVarDeclarationList>().toList()
 
         return declarations.flatMap { it.extractEntireDeclarations() }
     }

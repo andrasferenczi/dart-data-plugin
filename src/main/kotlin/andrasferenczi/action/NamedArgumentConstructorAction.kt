@@ -5,7 +5,7 @@ import andrasferenczi.declaration.DeclarationExtractor
 import andrasferenczi.declaration.canBeAssignedFromConstructor
 import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.evalAnchorInClass
-import andrasferenczi.ext.extractFromTriggeredDartClass
+import andrasferenczi.ext.extractOuterDartClass
 import andrasferenczi.ext.psi.hasMethodWithName
 import andrasferenczi.ext.psi.extractClassName
 import andrasferenczi.ext.psi.findChildrenByType
@@ -18,26 +18,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.jetbrains.lang.dart.psi.DartClassDefinition
 
 class NamedArgumentConstructorAction : BaseAnAction() {
-
-    override fun update(event: AnActionEvent) {
-        val dartClass = event.extractFromTriggeredDartClass()
-
-        if (dartClass === null) {
-            event.presentation.isEnabledAndVisible = false
-            return
-        }
-
-        val className = dartClass.findChildrenByType<DartClassDefinition>()
-            .firstOrNull()
-            ?.extractClassName()
-
-        if (className === null) {
-            event.presentation.isEnabledAndVisible = false
-            return
-        }
-
-        event.presentation.isEnabledAndVisible = dartClass.hasMethodWithName(className)
-    }
 
     override fun performAction(
         event: AnActionEvent,

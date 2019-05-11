@@ -3,7 +3,7 @@ package andrasferenczi.action
 import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.init.tryCreateActionData
 import andrasferenczi.action.init.tryExtractDartClassDefinition
-import andrasferenczi.ext.extractFromTriggeredDartClass
+import andrasferenczi.ext.extractOuterDartClass
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.jetbrains.lang.dart.psi.DartClassDefinition
@@ -12,7 +12,7 @@ abstract class BaseAnAction : AnAction() {
 
     override fun update(event: AnActionEvent) {
         event.presentation.isEnabledAndVisible =
-            event.extractFromTriggeredDartClass() !== null
+            event.extractOuterDartClass() !== null
     }
 
     final override fun actionPerformed(event: AnActionEvent) {

@@ -17,7 +17,7 @@ val AnActionEvent.editorAndPsiFile: Pair<Editor?, PsiFile?>
         return editor to psiFile
     }
 
-fun AnActionEvent.extractFromTriggeredDartClass(): DartClass? {
+fun AnActionEvent.extractOuterDartClass(): DartClass? {
     val (editor, psiFile) = editorAndPsiFile
     // Todo: Maybe not return early when editor is null
     if (editor == null || psiFile === null) {

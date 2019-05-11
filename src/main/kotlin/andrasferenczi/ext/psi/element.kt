@@ -1,14 +1,18 @@
 package andrasferenczi.ext.psi
 
+import andrasferenczi.traversal.TraversalType
+import andrasferenczi.traversal.createPsiFilterTraversal
+import andrasferenczi.traversal.createPsiTraversal
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.siblings
+import com.sun.org.apache.xpath.internal.operations.Bool
 import java.util.*
 
 /**
  * Does not omit children that are PsiWhiteSpace or LeafPsiNode
  */
-fun PsiElement.allChildren(): List<PsiElement> {
-    return firstChild?.siblings()?.toList() ?: emptyList()
+fun PsiElement.allChildren(): Sequence<PsiElement> {
+    return firstChild?.siblings() ?: emptySequence()
 }
 
 fun PsiElement.calculateGlobalOffset(): Int {
@@ -31,43 +35,23 @@ inline fun <reified T : PsiElement> PsiElement.findFirstParentOfType(): T? {
     }
 }
 
-// Todo: Convert to sequence
-// Todo: Set if BFS / DFS
-// Todo: FindFirstChildByType (+ BFS / DFS settings) function
-inline fun <reified T : PsiElement> PsiElement.findChildrenByType(): List<T> {
-    // Special case, do not go further
-    if (this is T) {
-        return listOf(this)
-    }
+inline fun <reified T : PsiElement> PsiElement.findFirstChildByType(
+    traversalType: TraversalType = TraversalType.Breadth
+): T? = this.findChildrenByType<T>(traversalType).firstOrNull()
 
-    val result: MutableList<T> = LinkedList()
-
-    var currentChildren: List<PsiElement> = LinkedList<PsiElement>().also { it += this }
-    var nextChildren: MutableList<PsiElement>
-
-    while (currentChildren.isNotEmpty()) {
-        nextChildren = LinkedList()
-
-        currentChildren
-            .flatMap { it.allChildren() }
-            .forEach { currentChild ->
-                if (currentChild is T) {
-                    result += currentChild
-                } else {
-                    nextChildren.add(currentChild)
-                }
-            }
-
-        currentChildren = nextChildren
-    }
-
-    return result
+inline fun <reified T : PsiElement> PsiElement.findChildrenByType(
+    traversalType: TraversalType = TraversalType.Breadth
+): Sequence<T> {
+    return createPsiFilterTraversal(traversalType) {
+        if (it is T) it
+        else null
+    }.invoke(this)
 }
 
 /**
  * Depth First Search
  *
- * action: returns 'false' if DFS should not go deeper into that
+ * action: returns 'false' if DFS should not go deeper into that element
  */
 fun PsiElement.iterateDFS(action: (element: PsiElement) -> Boolean) {
     for (child in this.allChildren()) {
