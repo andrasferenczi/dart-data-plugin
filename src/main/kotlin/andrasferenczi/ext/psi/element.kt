@@ -1,4 +1,4 @@
-package andrasferenczi.utils
+package andrasferenczi.ext.psi
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.siblings

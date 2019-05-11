@@ -27,10 +27,14 @@ val VariableDeclarationPsiElements.hasInitializer: Boolean
 val VariableDeclarationPsiElements.variableName: String
     get() = name.name ?: throw RuntimeException("Encountered a variable which does not have a name.")
 
+val VariableDeclarationPsiElements.isPrivate: Boolean
+    get() = variableName.startsWith("_")
+
 val VariableDeclarationPsiElements.canBeAssignedFromConstructor: Boolean
     get() {
         val isStatic = hasModifier(DeclarationModifier.Static)
         val isFinal = hasModifier(DeclarationModifier.Final)
+        val isPrivate = isPrivate
 
-        return !isStatic && ((isFinal && !hasInitializer) || !isFinal)
+        return !isPrivate && !isStatic && ((isFinal && !hasInitializer) || !isFinal)
     }

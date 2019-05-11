@@ -1,9 +1,9 @@
 package andrasferenczi.declaration
 
 import andrasferenczi.DartFileNotWellFormattedException
-import andrasferenczi.utils.allChildren
-import andrasferenczi.utils.findChildrenByType
-import andrasferenczi.utils.iterateDFS
+import andrasferenczi.ext.psi.allChildren
+import andrasferenczi.ext.psi.findChildrenByType
+import andrasferenczi.ext.psi.iterateDFS
 import andrasferenczi.utils.split
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement

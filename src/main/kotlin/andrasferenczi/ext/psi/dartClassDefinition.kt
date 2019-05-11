@@ -1,4 +1,4 @@
-package andrasferenczi.utils
+package andrasferenczi.ext.psi
 
 import andrasferenczi.DartFileNotWellFormattedException
 import com.intellij.psi.PsiElement
