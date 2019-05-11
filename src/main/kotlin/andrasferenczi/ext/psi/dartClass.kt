@@ -1,9 +1,6 @@
 package andrasferenczi.ext.psi
 
-import com.jetbrains.lang.dart.psi.DartClass
-import com.jetbrains.lang.dart.psi.DartClassDefinition
-import com.jetbrains.lang.dart.psi.DartClassMembers
-import com.jetbrains.lang.dart.psi.DartMixinDeclaration
+import com.jetbrains.lang.dart.psi.*
 
 val DartClass.body: DartClassMembers?
     get() {
@@ -15,3 +12,22 @@ val DartClass.body: DartClassMembers?
 
         return body?.classMembers
     }
+
+fun DartClass.hasMethodWithName(
+    methodName: String
+): Boolean {
+    if (methodName.isBlank()) {
+        return false
+    }
+
+    TODO("Check what comes in what order in the class hierarchy")
+
+//    val dartClassDefinition = findParentClassDefinition()
+//
+//    val declarations = dartClassDefinition?.findChildrenByType<DartMethodDeclaration>()
+//    if (declarations.isEmpty()) {
+//        return false
+//    }
+//
+//    return declarations.find { it.name == methodName } !== null
+}

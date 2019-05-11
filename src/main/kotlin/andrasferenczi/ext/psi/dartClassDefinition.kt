@@ -6,8 +6,8 @@ import com.jetbrains.lang.dart.psi.DartClassDefinition
 import com.jetbrains.lang.dart.psi.DartComponentName
 import com.jetbrains.lang.dart.psi.DartMethodDeclaration
 
-fun PsiElement.findParentClassDefinition() =
-    findFirstParentOfType<DartClassDefinition>()
+fun PsiElement.findParentClassDefinition(): DartClassDefinition? =
+    findFirstParentOfType()
 
 fun DartClassDefinition.extractClassName(): String =
     allChildren()

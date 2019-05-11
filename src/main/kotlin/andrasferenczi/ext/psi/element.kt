@@ -31,6 +31,9 @@ inline fun <reified T : PsiElement> PsiElement.findFirstParentOfType(): T? {
     }
 }
 
+// Todo: Convert to sequence
+// Todo: Set if BFS / DFS
+// Todo: FindFirstChildByType (+ BFS / DFS settings) function
 inline fun <reified T : PsiElement> PsiElement.findChildrenByType(): List<T> {
     // Special case, do not go further
     if (this is T) {
