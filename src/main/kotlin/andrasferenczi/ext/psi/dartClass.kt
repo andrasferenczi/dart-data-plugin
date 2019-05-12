@@ -1,6 +1,7 @@
 package andrasferenczi.ext.psi
 
 import com.jetbrains.lang.dart.psi.*
+import com.jetbrains.lang.dart.util.DartResolveUtil
 
 val DartClass.body: DartClassMembers?
     get() {
@@ -13,21 +14,11 @@ val DartClass.body: DartClassMembers?
         return body?.classMembers
     }
 
-fun DartClass.hasMethodWithName(
-    methodName: String
-): Boolean {
-    if (methodName.isBlank()) {
-        return false
-    }
+fun DartClass.collectClassesAndInterfaces(): Pair<List<DartClass>, List<DartClass>> {
+    val superClasses: MutableList<DartClass> = ArrayList()
+    val superInterfaces: MutableList<DartClass> = ArrayList()
 
-    TODO("Check what comes in what order in the class hierarchy")
+    DartResolveUtil.collectSupers(superClasses, superInterfaces, this)
 
-//    val dartClassDefinition = findParentClassDefinition()
-//
-//    val declarations = dartClassDefinition?.findChildrenByType<DartMethodDeclaration>()
-//    if (declarations.isEmpty()) {
-//        return false
-//    }
-//
-//    return declarations.find { it.name == methodName } !== null
+    return superClasses to superInterfaces
 }

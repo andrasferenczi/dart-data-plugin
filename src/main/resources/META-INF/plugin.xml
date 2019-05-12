@@ -33,7 +33,7 @@
         <!--        </action>-->
         <action id="andrasferenczi.action.NamedArgumentConstructorAction"
                 class="andrasferenczi.action.NamedArgumentConstructorAction"
-                text="Named Argument constructor">
+                text="Named Argument Constructor">
             <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="Generate.Named.Constructor.Dart"/>
         </action>
     </actions>
