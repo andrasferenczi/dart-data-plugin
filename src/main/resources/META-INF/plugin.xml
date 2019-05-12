@@ -26,15 +26,15 @@
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="Myplugin.Textboxes" class="andrasferenczi.HelloAction" text="Hello" description="Says hello"/>
         </group>
-        <!--        <action id="andrasferenczi.action.DartCopyWithAction" class="andrasferenczi.action.DartCopyWithAction"-->
-        <!--                text="copyWith"-->
-        <!--                description="Generate copyWith method">-->
-        <!--            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="Generate.Named.Constructor.Dart"/>-->
-        <!--        </action>-->
         <action id="andrasferenczi.action.NamedArgumentConstructorAction"
                 class="andrasferenczi.action.NamedArgumentConstructorAction"
                 text="Named Argument Constructor">
             <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="Generate.Named.Constructor.Dart"/>
+        </action>
+        <action id="andrasferenczi.action.DartCopyWithAction"
+                class="andrasferenczi.action.DartCopyWithAction"
+                text="copyWith()">
+            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
         </action>
     </actions>
 </idea-plugin>

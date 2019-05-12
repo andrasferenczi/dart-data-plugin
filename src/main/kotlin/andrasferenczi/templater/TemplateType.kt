@@ -3,5 +3,6 @@ package andrasferenczi.templater
 enum class TemplateType(
     val templateKey: String
 ) {
-    NamedParameterConstructor("named_parameter_constructor")
+    NamedParameterConstructor("named_parameter_constructor"),
+    CopyWithMethod("copy_with__method"),
 }
