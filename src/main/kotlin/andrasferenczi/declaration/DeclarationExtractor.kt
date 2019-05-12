@@ -1,7 +1,6 @@
 package andrasferenczi.declaration
 
 import andrasferenczi.DartFileNotWellFormattedException
-import andrasferenczi.ext.psi.allChildren
 import andrasferenczi.ext.psi.findChildrenByType
 import andrasferenczi.ext.psi.findFirstChildByType
 import andrasferenczi.ext.psi.iterateDFS
@@ -20,7 +19,8 @@ private val VARIABLE_DECLARATION_SEPARATORS = setOf(",", ";")
 private fun DartVarDeclarationList.extractDeclarations(): List<PsiElement> {
 
     val values: MutableList<PsiElement> = LinkedList()
-    // Todo: Convert this to the sequence-version
+    // This DFS iteration behaves slightly different from the common one...
+    // Not all returned truthy values will add the element to the list
     iterateDFS {
         // Do not evaluate the type declaration
         // A comma might come earlier (which belongs to the type) than the first name
@@ -46,7 +46,7 @@ private fun DartVarDeclarationList.extractDeclarations(): List<PsiElement> {
 }
 
 private fun DartVarDeclarationList.extractDeclarationNameAndInitializer(): List<Pair<DartComponentName, DartVarInit?>> {
-    val declarations = extractDeclarations()
+    val declarations = extractDeclarations().toList()
 
     val parts = declarations.split { it is LeafPsiElement && it.text == "," }
 

@@ -1,11 +1,10 @@
 package andrasferenczi.declaration
 
+import andrasferenczi.DartFileNotWellFormattedException
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.jetbrains.lang.dart.psi.DartComponentName
 import com.jetbrains.lang.dart.psi.DartType
-import com.jetbrains.lang.dart.psi.DartVarAccessDeclaration
 import com.jetbrains.lang.dart.psi.DartVarInit
-import java.lang.RuntimeException
 
 // DartVarAccessDeclaration can not be null
 // DartType can be null
@@ -25,7 +24,7 @@ val VariableDeclarationPsiElements.hasInitializer: Boolean
     get() = initializer !== null
 
 val VariableDeclarationPsiElements.variableName: String
-    get() = name.name ?: throw RuntimeException("Encountered a variable which does not have a name.")
+    get() = name.name ?: throw DartFileNotWellFormattedException("Encountered a variable which does not have a name.")
 
 val VariableDeclarationPsiElements.isPrivate: Boolean
     get() = variableName.startsWith("_")

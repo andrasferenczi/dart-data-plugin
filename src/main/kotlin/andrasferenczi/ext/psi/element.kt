@@ -15,8 +15,17 @@ fun PsiElement.allChildren(): Sequence<PsiElement> {
     return firstChild?.siblings() ?: emptySequence()
 }
 
-fun PsiElement.calculateGlobalOffset(): Int {
-    return this.startOffsetInParent + (this.parent?.startOffsetInParent ?: 0)
+fun PsiElement.listChildrenRecursivelyForDebug(depth: Int = 5): List<Any> {
+    if (depth <= 0) {
+        return emptyList()
+    }
+
+    return listOf(this)
+        .map {
+            it to it.allChildren().map { child ->
+                child to child.listChildrenRecursivelyForDebug(depth - 1)
+            }.toList()
+        }
 }
 
 inline fun <reified T : PsiElement> PsiElement.findFirstParentOfType(): T? {
