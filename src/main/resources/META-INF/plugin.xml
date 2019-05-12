@@ -19,8 +19,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <projectConfigurable
-                groupId="tools"
-                displayName="Dart data Custom plugin test"
+                groupId="editor"
                 instance="andrasferenczi.configuration.DataClassConfigurable"
         />
     </extensions>
