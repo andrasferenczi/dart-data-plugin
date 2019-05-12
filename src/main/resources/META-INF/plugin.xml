@@ -27,10 +27,6 @@
 
     <actions>
         <!-- Add your actions here -->
-        <group id="MyPlugin.TestMeu" text="Greeting kotlin" description="Greeting menu kot">
-            <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="Myplugin.Textboxes" class="andrasferenczi.HelloAction" text="Hello" description="Says hello"/>
-        </group>
         <action id="andrasferenczi.action.NamedArgumentConstructorAction"
                 class="andrasferenczi.action.NamedArgumentConstructorAction"
                 text="Named Argument Constructor">
