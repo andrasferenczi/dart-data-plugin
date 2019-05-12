@@ -18,6 +18,11 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <projectConfigurable
+                groupId="tools"
+                displayName="Dart data Custom plugin test"
+                instance="andrasferenczi.configuration.DataClassConfigurable"
+        />
     </extensions>
 
     <actions>
@@ -29,12 +34,16 @@
         <action id="andrasferenczi.action.NamedArgumentConstructorAction"
                 class="andrasferenczi.action.NamedArgumentConstructorAction"
                 text="Named Argument Constructor">
-            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="Generate.Named.Constructor.Dart"/>
+            <add-to-group group-id="GenerateGroup"
+                          anchor="after"
+                          relative-to-action="Generate.Named.Constructor.Dart"/>
         </action>
         <action id="andrasferenczi.action.DartCopyWithAction"
                 class="andrasferenczi.action.DartCopyWithAction"
                 text="copyWith()">
-            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
+            <add-to-group group-id="GenerateGroup"
+                          anchor="after"
+                          relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
         </action>
     </actions>
 </idea-plugin>
