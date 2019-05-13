@@ -1,19 +1,34 @@
 package andrasferenczi.configuration
 
-import com.intellij.uiDesigner.core.GridConstraints
-import com.intellij.uiDesigner.core.GridLayoutManager
+import andrasferenczi.templater.TemplateConstants
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
 import javax.swing.*
 
+// Insets
+private const val TOP_INSET = 10
+private const val BOTTOM_INSET = 0
+private const val RIGHT_INSET = 10
+
+// The texts should be aligned
+private const val CHECKBOX_CHECK_AREA_WIDTH = 22
+private const val CHECKBOX_LEFT_INSET = 15
+private const val NO_CHECKBOX_LEFT_INSET = CHECKBOX_CHECK_AREA_WIDTH + CHECKBOX_LEFT_INSET
+
+// Input
+// Default values
 data class ConfigurationUIInput(
-    val isChecked: Boolean = false
+    val copyWithMethodName: String = TemplateConstants.COPYWITH_DEFAULT_METHOD_NAME,
+    val useRequiredAnnotation: Boolean = true,
+    val useNewKeyword: Boolean = true
 ) {
     companion object {
         val TEST_DATA = ConfigurationUIInput()
     }
 }
+
+// Output
 
 class ConfigurationUIOutput(
     val jComponent: JComponent,
@@ -28,15 +43,6 @@ fun createConfigurationUI(input: ConfigurationUIInput): ConfigurationUIOutput {
 
     val pane = JPanel(GridBagLayout())
 
-    val TOP_INSET = 10
-    val BOTTOM_INSET = 0
-    val RIGHT_INSET = 10
-
-    // The texts should be aligned
-    val CHECKBOX_CHECK_AREA_WIDTH = 22
-    val CHECKBOX_LEFT_INSET = 15
-    val NO_CHECKBOX_LEFT_INSET = CHECKBOX_CHECK_AREA_WIDTH + CHECKBOX_LEFT_INSET
-
     // ROW 1
     pane.add(
         JLabel("name of the copyWith() method"),
@@ -48,7 +54,7 @@ fun createConfigurationUI(input: ConfigurationUIInput): ConfigurationUIOutput {
         }
     )
 
-    val copyWithNameTextField = JTextField("copyWith")
+    val copyWithNameTextField = JTextField(input.copyWithMethodName)
     pane.add(
         copyWithNameTextField,
         GridBagConstraints().apply {
@@ -60,7 +66,10 @@ fun createConfigurationUI(input: ConfigurationUIInput): ConfigurationUIOutput {
         }
     )
 
-    val useRequiredAnnotationCheckBox = JCheckBox("add @required to constructor parameters", false)
+    val useRequiredAnnotationCheckBox = JCheckBox(
+        "add @required to constructor parameters",
+        input.useRequiredAnnotation
+    )
     // ROW 2
     pane.add(
         useRequiredAnnotationCheckBox,
@@ -72,7 +81,10 @@ fun createConfigurationUI(input: ConfigurationUIInput): ConfigurationUIOutput {
         }
     )
 
-    val useNewKeywordCheckbox = JCheckBox("use the 'new' keyword", false)
+    val useNewKeywordCheckbox = JCheckBox(
+        "use the 'new' keyword",
+        input.useNewKeyword
+    )
     // ROW 3
     pane.add(
         useNewKeywordCheckbox,
