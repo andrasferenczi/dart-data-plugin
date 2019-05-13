@@ -1,6 +1,6 @@
 package andrasferenczi.configuration_ui
 
-import andrasferenczi.configuration.ConfigurationUIInput
+import andrasferenczi.configuration.ConfigurationData
 import andrasferenczi.configuration.createConfigurationUI
 import javax.swing.JFrame
 
@@ -8,7 +8,7 @@ import javax.swing.JFrame
  * For faster preview compared to starting the entire IDEA anew
  */
 fun main() {
-    val component = createConfigurationUI(ConfigurationUIInput.TEST_DATA).jComponent
+    val component = createConfigurationUI(ConfigurationData.TEST_DATA).jComponent
 
     // create a basic JFrame
     JFrame.setDefaultLookAndFeelDecorated(true)

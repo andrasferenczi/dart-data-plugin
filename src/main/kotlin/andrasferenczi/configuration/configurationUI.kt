@@ -1,6 +1,5 @@
 package andrasferenczi.configuration
 
-import andrasferenczi.templater.TemplateConstants
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
@@ -16,30 +15,8 @@ private const val CHECKBOX_CHECK_AREA_WIDTH = 22
 private const val CHECKBOX_LEFT_INSET = 15
 private const val NO_CHECKBOX_LEFT_INSET = CHECKBOX_CHECK_AREA_WIDTH + CHECKBOX_LEFT_INSET
 
-// Input
-// Default values
-data class ConfigurationUIInput(
-    val copyWithMethodName: String = TemplateConstants.COPYWITH_DEFAULT_METHOD_NAME,
-    val useRequiredAnnotation: Boolean = true,
-    val useNewKeyword: Boolean = true
-) {
-    companion object {
-        val TEST_DATA = ConfigurationUIInput()
-    }
-}
 
-// Output
-
-class ConfigurationUIOutput(
-    val jComponent: JComponent,
-
-    val copyWithNameTextField: JTextField,
-    val useRequiredAnnotationCheckBox: JCheckBox,
-    val useNewKeywordCheckbox: JCheckBox
-)
-
-
-fun createConfigurationUI(input: ConfigurationUIInput): ConfigurationUIOutput {
+fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
 
     val pane = JPanel(GridBagLayout())
 
@@ -107,7 +84,7 @@ fun createConfigurationUI(input: ConfigurationUIInput): ConfigurationUIOutput {
         }
     )
 
-    return ConfigurationUIOutput(
+    return ConfigurationUIElements(
         pane,
         copyWithNameTextField,
         useRequiredAnnotationCheckBox,

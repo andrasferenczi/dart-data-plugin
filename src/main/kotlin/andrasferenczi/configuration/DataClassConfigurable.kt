@@ -2,39 +2,52 @@ package andrasferenczi.configuration
 
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project
-import com.intellij.uiDesigner.core.GridConstraints
-import com.intellij.uiDesigner.core.GridLayoutManager
-import java.awt.Insets
 import javax.swing.*
 
 
 class DataClassConfigurable(
-    // private val project: Project
+    private val project: Project
 ) : Configurable {
 
-    var copyWithNameTextField: JTextField? = null
+    private var uiElements: ConfigurationUIElements? = null
+
+    private var lastSavedConfigurationData = ConfigurationDataManager.retrieveData(project)
+
+    private val currentConfigurationData: ConfigurationData?
+        get() = uiElements?.extractCurrentConfigurationData()
 
     // TODO
-    override fun isModified(): Boolean = false
+    override fun isModified(): Boolean {
+        return currentConfigurationData != lastSavedConfigurationData
+    }
 
     override fun getDisplayName(): String = "Dart Dataclass Plugin"
 
     override fun apply() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val dataToSave = currentConfigurationData ?: throw RuntimeException("No data to save is available")
+
+        ConfigurationDataManager.saveData(project, dataToSave)
+        lastSavedConfigurationData = dataToSave.copy()
     }
 
     override fun createComponent(): JComponent? {
-        val ui = createConfigurationUI(ConfigurationUIInput.TEST_DATA)
+        // Test data will be replaced in the reset() call with the right values
+        val ui = createConfigurationUI(ConfigurationData.TEST_DATA)
+        this.uiElements = ui
 
         return ui.jComponent
     }
 
     override fun disposeUIResources() {
         super.disposeUIResources()
+
+        this.uiElements = null
     }
 
     override fun reset() {
         super.reset()
+
+        this.uiElements?.setFields(lastSavedConfigurationData)
     }
 
 //    @NotNull
