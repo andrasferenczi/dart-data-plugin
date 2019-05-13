@@ -22,7 +22,7 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
 
     // ROW 1
     pane.add(
-        JLabel("name of the copyWith() method"),
+        JLabel("name of the copy method"),
         GridBagConstraints().apply {
             fill = GridBagConstraints.HORIZONTAL
             gridx = 0

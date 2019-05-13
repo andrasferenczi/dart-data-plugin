@@ -1,15 +1,15 @@
 package andrasferenczi.action.utils
 
-import andrasferenczi.templater.TemplateConstants
 import com.jetbrains.lang.dart.psi.DartClass
 
 fun createCopyWithDeleteCall(
-    dartClass: DartClass
+    dartClass: DartClass,
+    copyWithMethodName: String
 ): (() -> Unit)? {
 
     // TODO: Prompt user for creating the constructor if it does not exist yet
 
-    val copyWithMethod = dartClass.findMethodByName(TemplateConstants.COPYWITH_METHOD_NAME)
+    val copyWithMethod = dartClass.findMethodByName(copyWithMethodName)
 
     copyWithMethod?.let {
         return { it.delete() }

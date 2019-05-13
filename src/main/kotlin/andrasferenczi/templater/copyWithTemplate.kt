@@ -21,7 +21,9 @@ data class VariableTemplateParam(
 
 data class CopyWithTemplateParams(
     val className: String,
-    val variableNames: List<VariableTemplateParam>
+    val variableNames: List<VariableTemplateParam>,
+    val copyWithMethodName: String,
+    val useNewKeyword: Boolean
 )
 
 fun createCopyWithConstructorTemplate(
@@ -29,7 +31,7 @@ fun createCopyWithConstructorTemplate(
     params: CopyWithTemplateParams
 ): Template {
 
-    val (className, variableNames) = params
+    val (className, variableNames, copyWithMethodName, useNewKeyword) = params
 
     return templateManager.createTemplate(
         TemplateType.CopyWithMethod.templateKey,
@@ -39,7 +41,7 @@ fun createCopyWithConstructorTemplate(
 
         addTextSegment(className)
         addTextSegment(" ")
-        addTextSegment(TemplateConstants.COPYWITH_METHOD_NAME)
+        addTextSegment(copyWithMethodName)
         addTextSegment("({\n")
 
         variableNames.forEach {
@@ -53,8 +55,10 @@ fun createCopyWithConstructorTemplate(
 
         addTextSegment("return")
         addTextSegment(" ")
-        addTextSegment("new")
-        addTextSegment(" ")
+        if (useNewKeyword) {
+            addTextSegment("new")
+            addTextSegment(" ")
+        }
         addTextSegment(className)
         addTextSegment("(\n")
 

@@ -35,7 +35,7 @@
         </action>
         <action id="andrasferenczi.action.DartCopyWithAction"
                 class="andrasferenczi.action.DartCopyWithAction"
-                text="copyWith()">
+                text="Copy">
             <add-to-group group-id="GenerateGroup"
                           anchor="after"
                           relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>

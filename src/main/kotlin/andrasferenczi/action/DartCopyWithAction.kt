@@ -2,6 +2,7 @@ package andrasferenczi.action
 
 import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.utils.createCopyWithDeleteCall
+import andrasferenczi.configuration.ConfigurationDataManager
 import andrasferenczi.declaration.DeclarationExtractor
 import andrasferenczi.declaration.canBeAssignedFromConstructor
 import andrasferenczi.declaration.variableName
@@ -39,15 +40,22 @@ class DartCopyWithAction : BaseAnAction() {
 
         val templateManager = TemplateManager.getInstance(project)
 
+        val configuration = ConfigurationDataManager.retrieveData(project)
+
         val template = createCopyWithConstructorTemplate(
             templateManager,
             CopyWithTemplateParams(
                 className = dartClassName,
-                variableNames = variableNames
+                variableNames = variableNames,
+                copyWithMethodName = configuration.copyWithMethodName,
+                useNewKeyword = configuration.useNewKeyword
             )
         )
 
-        val copyWithDeleteCall = createCopyWithDeleteCall(dartClass)
+        val copyWithDeleteCall = createCopyWithDeleteCall(
+            dartClass,
+            configuration.copyWithMethodName
+        )
 
         project.runWriteAction {
             copyWithDeleteCall?.let {

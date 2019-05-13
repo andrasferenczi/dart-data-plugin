@@ -5,6 +5,7 @@ import andrasferenczi.action.utils.DartConstructorType
 import andrasferenczi.action.utils.createConstructorDeleteCallWithUserPrompt
 import andrasferenczi.action.utils.deleteAllPsiElements
 import andrasferenczi.action.utils.extractMethodConstructorInfos
+import andrasferenczi.configuration.ConfigurationDataManager
 import andrasferenczi.declaration.DeclarationExtractor
 import andrasferenczi.declaration.canBeAssignedFromConstructor
 import andrasferenczi.declaration.variableName
@@ -41,11 +42,14 @@ class NamedArgumentConstructorAction : BaseAnAction() {
 
         val templateManager = TemplateManager.getInstance(project)
 
+        val configuration = ConfigurationDataManager.retrieveData(project)
+
         val template = createConstructorTemplate(
             templateManager,
             ConstructorTemplateParams(
                 className = dartClassName,
-                publicVariableNames = variableNames
+                publicVariableNames = variableNames,
+                addRequiredAnnotation = configuration.useRequiredAnnotation
             )
         )
 

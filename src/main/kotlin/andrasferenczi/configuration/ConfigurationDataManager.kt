@@ -34,7 +34,7 @@ object ConfigurationDataManager {
     fun saveData(project: Project, configurationData: ConfigurationData) {
         val properties = PropertiesComponent.getInstance(project)
 
-        // Not to self: This api is a joke with the default data - wasted an hour why boolean is not set
+        // Note to self: This api is a joke with the default data - wasted an hour why boolean is not set
 
         properties.setValue(
             Keys.COPY_WITH_METHOD_NAME,
