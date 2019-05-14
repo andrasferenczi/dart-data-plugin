@@ -2,8 +2,8 @@ package andrasferenczi.action
 
 import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.utils.createCopyWithDeleteCall
+import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
-import andrasferenczi.declaration.DeclarationExtractor
 import andrasferenczi.declaration.canBeAssignedFromConstructor
 import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.evalAnchorInClass
@@ -23,9 +23,7 @@ class DartCopyWithAction : BaseAnAction() {
     override fun performAction(event: AnActionEvent, actionData: ActionData, dartClass: DartClassDefinition) {
         val (project, editor, _, _) = actionData
 
-        val dartClassName = dartClass.extractClassName()
-        val declarations = DeclarationExtractor
-            .extractDeclarationsFromClass(dartClass)
+        val declarations = selectFieldsWithDialog(project, dartClass) ?: return
 
         val variableNames: List<VariableTemplateParam> = declarations
             .filter { it.canBeAssignedFromConstructor }
@@ -39,8 +37,8 @@ class DartCopyWithAction : BaseAnAction() {
             }
 
         val templateManager = TemplateManager.getInstance(project)
-
         val configuration = ConfigurationDataManager.retrieveData(project)
+        val dartClassName = dartClass.extractClassName()
 
         val template = createCopyWithConstructorTemplate(
             templateManager,
