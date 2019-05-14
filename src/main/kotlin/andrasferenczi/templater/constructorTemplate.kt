@@ -1,5 +1,6 @@
 package andrasferenczi.templater
 
+import andrasferenczi.ext.*
 import com.intellij.codeInsight.template.Template
 import com.intellij.codeInsight.template.TemplateManager
 
@@ -22,24 +23,29 @@ fun createConstructorTemplate(
         isToReformat = true
 
         addTextSegment(className)
-        addTextSegment("({\n")
-        // Todo: Start / End variable ?
+        withParentheses {
+            if (publicVariableNames.isNotEmpty()) {
+                withCurlyBraces {
+                    addNewLine()
 
-        publicVariableNames.forEach {
-            if(addRequiredAnnotation) {
-                addTextSegment("@required")
-                addTextSegment(" ")
+                    publicVariableNames.forEach {
+                        if (addRequiredAnnotation) {
+                            addTextSegment("@required")
+                            addSpace()
+                        }
+
+                        addTextSegment("this.")
+                        addTextSegment(it)
+                        addComma()
+                        addNewLine()
+                    }
+                }
             }
-
-            addTextSegment("this.")
-            addTextSegment(it)
-            addTextSegment(",\n")
         }
 
-
-        addTextSegment("});")
+        addSemicolon()
 
         // Line break helps formatting
-        addTextSegment(" ")
+        addSpace()
     }
 }

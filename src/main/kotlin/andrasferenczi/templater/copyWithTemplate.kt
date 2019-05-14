@@ -1,5 +1,6 @@
 package andrasferenczi.templater
 
+import andrasferenczi.ext.*
 import com.intellij.codeInsight.template.Template
 import com.intellij.codeInsight.template.TemplateManager
 
@@ -40,44 +41,59 @@ fun createCopyWithConstructorTemplate(
         isToReformat = true
 
         addTextSegment(className)
-        addTextSegment(" ")
+        addSpace()
         addTextSegment(copyWithMethodName)
-        addTextSegment("({\n")
 
-        variableNames.forEach {
-            addTextSegment(it.type)
-            addTextSegment(" ")
-            addTextSegment(it.functionInputName)
-            addTextSegment(",\n")
+        withParentheses {
+            if (variableNames.isNotEmpty()) {
+                withCurlyBraces {
+                    addNewLine()
+
+                    variableNames.forEach {
+                        addTextSegment(it.type)
+                        addTextSegment(" ")
+                        addTextSegment(it.functionInputName)
+                        addTextSegment(",")
+                        addNewLine()
+                    }
+                }
+            }
         }
 
-        addTextSegment("}) {\n")
+        withCurlyBraces {
+            addNewLine()
 
-        addTextSegment("return")
-        addTextSegment(" ")
-        if (useNewKeyword) {
-            addTextSegment("new")
-            addTextSegment(" ")
+            addTextSegment("return")
+            addSpace()
+            if (useNewKeyword) {
+                addTextSegment("new")
+                addSpace()
+            }
+            addTextSegment(className)
+
+            withParentheses {
+                addNewLine()
+
+                variableNames.forEach {
+                    addTextSegment(it.namedConstructorParamName)
+                    addTextSegment(":")
+                    addSpace()
+                    addTextSegment(it.functionInputName)
+                    addSpace()
+                    addTextSegment("??")
+                    addSpace()
+                    addTextSegment("this.")
+                    addTextSegment(it.thisAccessName)
+                    addComma()
+                    addNewLine()
+                }
+            }
+
+            addSemicolon()
         }
-        addTextSegment(className)
-        addTextSegment("(\n")
-
-        variableNames.forEach {
-            addTextSegment(it.namedConstructorParamName)
-            addTextSegment(": ")
-            addTextSegment(it.functionInputName)
-            addTextSegment(" ?? ")
-            addTextSegment("this.")
-            addTextSegment(it.thisAccessName)
-            addTextSegment(",\n")
-        }
-
-        addTextSegment(");")
-
-        addTextSegment("}")
 
         // Formatting ...
-        addTextSegment(" ")
+        addSpace()
     }
 
 }
