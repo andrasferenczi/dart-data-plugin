@@ -94,7 +94,7 @@ private fun DartVarDeclarationList.extractEntireDeclarations(): List<VariableDec
     val declarations = extractDeclarationNameAndInitializer()
 
     return declarations.map { (name, initializer) ->
-        VariableDeclarationPsiElements(
+        VariableDeclarationPsiElementsImpl(
             modifiers,
             type,
             name,
@@ -103,13 +103,63 @@ private fun DartVarDeclarationList.extractEntireDeclarations(): List<VariableDec
     }
 }
 
+private val privateToUniquePublicVariableNameTransformations = listOf<(variableName: String) -> String>(
+    // Remove starting underscore and make it variable like
+    { it.substring(1).decapitalize() },
+    // Private
+    { "p" + it.substring(1).capitalize() },
+    // mVariable for the Android <3
+    { "m" + it.substring(1).capitalize() },
+    // Unique
+    { "u" + it.substring(1).capitalize() },
+    { "p_" + it.substring(1).capitalize() },
+    { "m_" + it.substring(1).capitalize() },
+    { "u_" + it.substring(1).capitalize() }
+)
+
+// Function keeps name if not private
+// If 2 same-named variables exist, there will be errors anyway in the user's code
+private fun createUniquePublicVariableName(variableName: String, existingNames: Set<String>): String {
+    if (variableName.isBlank() || variableName.length == 1) {
+        throw RuntimeException("Variable name $variableName is not a valid name")
+    }
+
+    if (!isVariableNamePrivate(variableName)) {
+        return variableName
+    }
+
+    val newVarName = privateToUniquePublicVariableNameTransformations.asSequence()
+        .map { it.invoke(variableName) }
+        .filter { it !in existingNames }
+        .firstOrNull()
+        ?: variableName.substring(1)
+
+    // There could have been multiple underscores
+    return if (isVariableNamePrivate(newVarName))
+        "p$newVarName"
+    else
+        newVarName
+}
+
 object DeclarationExtractor {
 
-    fun extractDeclarationsFromClass(dartClass: DartClassDefinition): List<VariableDeclarationPsiElements> {
+    fun extractDeclarationsFromClass(dartClass: DartClassDefinition): List<VariableDeclaration> {
         // Todo: Probably some type of max depth would be useful
-        val declarations = dartClass.findChildrenByType<DartVarDeclarationList>().toList()
+        val varDeclarations = dartClass.findChildrenByType<DartVarDeclarationList>().toList()
+        val declarations = varDeclarations.flatMap { it.extractEntireDeclarations() }
 
-        return declarations.flatMap { it.extractEntireDeclarations() }
+        val existingNames = declarations.map { it.variableName }.toSet()
+        return declarations.map {
+            val newName = createUniquePublicVariableName(
+                it.variableName,
+                existingNames
+            )
+
+            return@map VariableDeclaration(
+                it,
+                PublicNamedVariableImpl(newName)
+            )
+        }
     }
 
 }
