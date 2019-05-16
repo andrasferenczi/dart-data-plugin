@@ -1,6 +1,7 @@
 package andrasferenczi.action
 
 import andrasferenczi.action.init.ActionData
+import andrasferenczi.action.utils.createMapDeleteCall
 import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
 import andrasferenczi.declaration.fullTypeName
@@ -15,6 +16,7 @@ import andrasferenczi.templater.JsonTemplateParams
 import andrasferenczi.templater.createMapTemplate
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.psi.PsiDocumentManager
 import com.jetbrains.lang.dart.psi.DartClassDefinition
 
 class MapAction : BaseAnAction() {
@@ -48,7 +50,16 @@ class MapAction : BaseAnAction() {
             )
         )
 
+        val deleteCall = createMapDeleteCall(dartClass)
+
         project.runWriteAction {
+            deleteCall?.let {
+                it.invoke()
+
+                PsiDocumentManager.getInstance(project)
+                    .doPostponedOperationsAndUnblockDocument(editor.document)
+            }
+
             val anchor = editor.evalAnchorInClass(dartClass)
             editor.setCaretSafe(dartClass, anchor.textRange.endOffset)
             templateManager.startTemplate(editor, template)

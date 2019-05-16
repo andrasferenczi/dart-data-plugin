@@ -41,6 +41,8 @@ private fun Template.addToMap(params: JsonTemplateParams) {
         addTextSegment("return")
         addSpace()
         withCurlyBraces {
+            addNewLine()
+
             variables.forEach {
                 addTextSegment("'${it.mapKeyString}'")
                 addTextSegment(":")
@@ -48,6 +50,7 @@ private fun Template.addToMap(params: JsonTemplateParams) {
                 addTextSegment("this.")
                 addTextSegment(it.variableName)
                 addComma()
+                addNewLine()
             }
         }
         addSemicolon()
