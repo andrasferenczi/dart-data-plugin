@@ -62,6 +62,10 @@ class GenerateDialog(
         return fieldsComponent
     }
 
+    override fun getPreferredFocusedComponent(): JComponent? {
+        return fieldList
+    }
+
     fun getSelectedFields(): List<VariableDeclaration> {
         val selectedIndices = extractSelectedIndices()
         return this.declarations.filterIndexed { index, _ -> index in selectedIndices }
