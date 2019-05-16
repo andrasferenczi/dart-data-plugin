@@ -5,14 +5,13 @@ import andrasferenczi.action.utils.createCopyWithDeleteCall
 import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
 import andrasferenczi.declaration.canBeAssignedFromConstructor
+import andrasferenczi.declaration.fullTypeName
 import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.evalAnchorInClass
 import andrasferenczi.ext.psi.extractClassName
 import andrasferenczi.ext.runWriteAction
 import andrasferenczi.ext.setCaretSafe
-import andrasferenczi.templater.CopyWithTemplateParams
-import andrasferenczi.templater.VariableTemplateParam
-import andrasferenczi.templater.createCopyWithConstructorTemplate
+import andrasferenczi.templater.*
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.psi.PsiDocumentManager
@@ -25,14 +24,13 @@ class DartCopyWithAction : BaseAnAction() {
 
         val declarations = selectFieldsWithDialog(project, dartClass) ?: return
 
-        val variableNames: List<VariableTemplateParam> = declarations
-            .filter { it.canBeAssignedFromConstructor }
+        val variableNames: List<AliasedVariableTemplateParam> = declarations
             .map {
-                VariableTemplateParam(
-                    it.dartType?.text
+                AliasedVariableTemplateParamImpl(
+                    variableName = it.variableName,
+                    type = it.fullTypeName
                         ?: throw RuntimeException("No type is available - this variable should not be assignable from constructor"),
-                    it.variableName,
-                    it.variableName
+                    publicVariableName = it.publicVariableName
                 )
             }
 
@@ -44,7 +42,7 @@ class DartCopyWithAction : BaseAnAction() {
             templateManager,
             CopyWithTemplateParams(
                 className = dartClassName,
-                variableNames = variableNames,
+                variables = variableNames,
                 copyWithMethodName = configuration.copyWithMethodName,
                 useNewKeyword = configuration.useNewKeyword
             )

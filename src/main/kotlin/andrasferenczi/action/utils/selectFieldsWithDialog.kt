@@ -1,7 +1,7 @@
 package andrasferenczi.action.utils
 
 import andrasferenczi.declaration.DeclarationExtractor
-import andrasferenczi.declaration.VariableDeclarationPsiElements
+import andrasferenczi.declaration.VariableDeclaration
 import andrasferenczi.dialog.GenerateDialog
 import com.intellij.openapi.project.Project
 import com.jetbrains.lang.dart.psi.DartClassDefinition
@@ -12,7 +12,7 @@ import com.jetbrains.lang.dart.psi.DartClassDefinition
 fun selectFieldsWithDialog(
     project: Project,
     dartClass: DartClassDefinition
-): List<VariableDeclarationPsiElements>? {
+): List<VariableDeclaration>? {
 
     val declarations = DeclarationExtractor.extractDeclarationsFromClass(dartClass)
 

@@ -1,6 +1,6 @@
 package andrasferenczi.dialog
 
-import andrasferenczi.declaration.VariableDeclarationPsiElements
+import andrasferenczi.declaration.VariableDeclaration
 import andrasferenczi.declaration.canBeAssignedFromConstructor
 import com.intellij.ide.util.DefaultPsiElementCellRenderer
 import com.intellij.openapi.project.Project
@@ -15,7 +15,7 @@ import javax.swing.JPanel
 
 class GenerateDialog(
     project: Project,
-    private val declarations: List<VariableDeclarationPsiElements>
+    private val declarations: List<VariableDeclaration>
 ) : DialogWrapper(project) {
 
     private val fieldsCollection: CollectionListModel<PsiElement>
@@ -62,7 +62,7 @@ class GenerateDialog(
         return fieldsComponent
     }
 
-    fun getSelectedFields(): List<VariableDeclarationPsiElements> {
+    fun getSelectedFields(): List<VariableDeclaration> {
         val selectedIndices = extractSelectedIndices()
         return this.declarations.filterIndexed { index, _ -> index in selectedIndices }
     }

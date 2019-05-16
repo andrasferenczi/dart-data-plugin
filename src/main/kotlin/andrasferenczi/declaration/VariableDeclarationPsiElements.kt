@@ -44,6 +44,9 @@ fun VariableDeclarationPsiElements.hasModifier(modifier: DeclarationModifier): B
     return modifiers.find { it.text == modifier.text } !== null
 }
 
+val VariableDeclarationPsiElements.fullTypeName: String?
+    get() = dartType?.text
+
 val VariableDeclarationPsiElements.hasInitializer: Boolean
     get() = initializer !== null
 
@@ -62,8 +65,15 @@ val VariableDeclarationPsiElements.isPublic: Boolean
 val VariableDeclarationPsiElements.canBeAssignedFromConstructor: Boolean
     get() {
         val isStatic = hasModifier(DeclarationModifier.Static)
-        val isFinal = hasModifier(DeclarationModifier.Final)
-        val isPrivate = isPrivate
+        // Static or static const makes no difference
+        if(isStatic) {
+            return false
+        }
 
-        return !isPrivate && !isStatic && ((isFinal && !hasInitializer) || !isFinal)
+        val isFinal = hasModifier(DeclarationModifier.Final)
+        if(isFinal && hasInitializer) {
+            return false
+        }
+
+        return true
     }

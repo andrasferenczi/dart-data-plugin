@@ -4,14 +4,12 @@ import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.utils.createConstructorDeleteCallWithUserPrompt
 import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
-import andrasferenczi.declaration.canBeAssignedFromConstructor
-import andrasferenczi.declaration.variableName
+import andrasferenczi.declaration.*
 import andrasferenczi.ext.evalAnchorInClass
 import andrasferenczi.ext.psi.extractClassName
 import andrasferenczi.ext.runWriteAction
 import andrasferenczi.ext.setCaretSafe
-import andrasferenczi.templater.ConstructorTemplateParams
-import andrasferenczi.templater.createConstructorTemplate
+import andrasferenczi.templater.*
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.psi.PsiDocumentManager
@@ -29,9 +27,20 @@ class NamedArgumentConstructorAction : BaseAnAction() {
 
         val declarations = selectFieldsWithDialog(project, dartClass) ?: return
 
-        val variableNames = declarations
-            .filter { it.canBeAssignedFromConstructor }
-            .map { it.variableName }
+        val publicVariables: List<PublicVariableTemplateParam> = declarations
+            .filter { it.isPublic }
+            .map { PublicVariableTemplateParamImpl(it.variableName) }
+
+        val privateVariables: List<AliasedVariableTemplateParam> = declarations
+            .filter { it.isPrivate }
+            .map {
+                AliasedVariableTemplateParamImpl(
+                    variableName = it.variableName,
+                    type = it.fullTypeName
+                        ?: throw RuntimeException("No type is available - this variable should not be assignable from constructor"),
+                    publicVariableName = it.publicVariableName
+                )
+            }
 
         val templateManager = TemplateManager.getInstance(project)
         val configuration = ConfigurationDataManager.retrieveData(project)
@@ -41,7 +50,8 @@ class NamedArgumentConstructorAction : BaseAnAction() {
             templateManager,
             ConstructorTemplateParams(
                 className = dartClassName,
-                publicVariableNames = variableNames,
+                publicVariables = publicVariables,
+                privateVariables = privateVariables,
                 addRequiredAnnotation = configuration.useRequiredAnnotation
             )
         )

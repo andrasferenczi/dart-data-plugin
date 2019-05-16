@@ -4,25 +4,9 @@ import andrasferenczi.ext.*
 import com.intellij.codeInsight.template.Template
 import com.intellij.codeInsight.template.TemplateManager
 
-// Extend later for private variables
-data class VariableTemplateParam(
-    // Full type name, like Map<String, int>
-    // (no imports needed, since this should be already in the class)
-    val type: String,
-    // Input name for the function
-    val functionInputName: String,
-    // By the name it can be accessed with this.__name__
-    val thisAccessName: String
-) {
-    // The name the named constructor has
-    // Use the same name for now
-    val namedConstructorParamName: String
-        get() = functionInputName
-}
-
 data class CopyWithTemplateParams(
     val className: String,
-    val variableNames: List<VariableTemplateParam>,
+    val variables: List<AliasedVariableTemplateParam>,
     val copyWithMethodName: String,
     val useNewKeyword: Boolean
 )
@@ -32,7 +16,7 @@ fun createCopyWithConstructorTemplate(
     params: CopyWithTemplateParams
 ): Template {
 
-    val (className, variableNames, copyWithMethodName, useNewKeyword) = params
+    val (className, variables, copyWithMethodName, useNewKeyword) = params
 
     return templateManager.createTemplate(
         TemplateType.CopyWithMethod.templateKey,
@@ -45,14 +29,14 @@ fun createCopyWithConstructorTemplate(
         addTextSegment(copyWithMethodName)
 
         withParentheses {
-            if (variableNames.isNotEmpty()) {
+            if (variables.isNotEmpty()) {
                 withCurlyBraces {
                     addNewLine()
 
-                    variableNames.forEach {
+                    variables.forEach {
                         addTextSegment(it.type)
                         addTextSegment(" ")
-                        addTextSegment(it.functionInputName)
+                        addTextSegment(it.publicVariableName)
                         addTextSegment(",")
                         addNewLine()
                     }
@@ -74,16 +58,16 @@ fun createCopyWithConstructorTemplate(
             withParentheses {
                 addNewLine()
 
-                variableNames.forEach {
+                variables.forEach {
                     addTextSegment(it.namedConstructorParamName)
                     addTextSegment(":")
                     addSpace()
-                    addTextSegment(it.functionInputName)
+                    addTextSegment(it.publicVariableName)
                     addSpace()
                     addTextSegment("??")
                     addSpace()
                     addTextSegment("this.")
-                    addTextSegment(it.thisAccessName)
+                    addTextSegment(it.variableName)
                     addComma()
                     addNewLine()
                 }
