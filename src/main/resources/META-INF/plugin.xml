@@ -40,5 +40,13 @@
                           anchor="after"
                           relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
         </action>
+        <action id="andrasferenczi.action.MapAction"
+                class="andrasferenczi.action.MapAction"
+                text="toMap() and fromMap()">
+            <add-to-group group-id="GenerateGroup"
+                          anchor="after"
+                          relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
+        </action>
+
     </actions>
 </idea-plugin>

@@ -26,6 +26,10 @@ interface AliasedVariableTemplateParam : TypedVariableTemplateParam, PrivateName
 val AliasedVariableTemplateParam.namedConstructorParamName: String
     get() = publicVariableName
 
+// To make the reading and writing from the map consistent
+val AliasedVariableTemplateParam.mapKeyString: String
+    get() = variableName
+
 // Classes
 data class PublicVariableTemplateParamImpl(
     override val variableName: String

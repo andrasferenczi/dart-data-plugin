@@ -5,4 +5,6 @@ enum class TemplateType(
 ) {
     NamedParameterConstructor("named_parameter_constructor"),
     CopyWithMethod("copy_with__method"),
+    MapTemplate("to_map__from_map"),
+    Combined("combined")
 }
