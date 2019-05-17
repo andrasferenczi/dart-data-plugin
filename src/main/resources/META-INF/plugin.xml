@@ -1,14 +1,40 @@
 <idea-plugin>
     <id>andrasferenczi.dart-data-plugin</id>
-    <name>Plugin display name here</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
-
-    <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
-    ]]></description>
+    <name>Dart Data Class</name>
+    <vendor email="a.ferenczi.andras@gmail.com">Andras Ferenczi</vendor>
 
     <depends>Dart</depends>
+
+    <!-- 2017.2 -->
+    <idea-version since-build="172"/>
+
+    <description><![CDATA[
+        <p>Essential utility methods generator for Dart data classes. Used best for functional paradigms.</p>
+
+        <p>Features:</p>
+
+        <ul>
+            <li>Named argument constructor generator</li>
+            <li>copyWith() method generator</li>
+            <li>toJson() / fromJson() method generator</li>
+        </ul>
+
+        <p>With settings and dialog selection screen, as if it was an official plugin (which it is not).</p>
+        <p>Find out more on <a href="https://github.com/andrasferenczi/dart-data-plugin">the project's Github page.</a></p>
+
+    ]]></description>
+
+<!--    <change-notes><![CDATA[-->
+<!--        <ul>-->
+<!--            <li><em>1.0.0</em>-->
+<!--                <ul>-->
+<!--                    <li>First stable version released. See description for details.</li>-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    ]]>-->
+<!--    </change-notes>-->
+
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
@@ -17,7 +43,6 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
         <projectConfigurable
                 groupId="editor"
                 instance="andrasferenczi.configuration.DataClassConfigurable"
@@ -25,7 +50,6 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
         <action id="andrasferenczi.action.NamedArgumentConstructorAction"
                 class="andrasferenczi.action.NamedArgumentConstructorAction"
                 text="Named Argument Constructor">
@@ -47,6 +71,5 @@
                           anchor="after"
                           relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
         </action>
-
     </actions>
 </idea-plugin>
