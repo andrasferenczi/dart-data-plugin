@@ -35,6 +35,4 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 patchPluginXml {
-    changeNotes """
-      <em>First version</em>"""
 }

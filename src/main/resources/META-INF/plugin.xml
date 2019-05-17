@@ -9,31 +9,33 @@
     <idea-version since-build="172"/>
 
     <description><![CDATA[
-        <p>Essential utility methods generator for Dart data classes. Used best for functional paradigms.</p>
-
+        <p>Essential utility methods generator for Dart data classes.</p>
+        <br/>
+        <br/>
         <p>Features:</p>
-
         <ul>
             <li>Named argument constructor generator</li>
             <li>copyWith() method generator</li>
-            <li>toJson() / fromJson() method generator</li>
+            <li>toJson() / fromJson() methods generator</li>
         </ul>
 
-        <p>With settings and dialog selection screen, as if it was an official plugin (which it is not).</p>
-        <p>Find out more on <a href="https://github.com/andrasferenczi/dart-data-plugin">the project's Github page.</a></p>
-
+        <p>Featured with a couple additional settings.</p>
+        <br/>
+        <p>Find out more on the project's <a href="https://github.com/andrasferenczi/dart-data-plugin">Github page</a>.</p>
+        <br/>
+        <em>Not an official plugin.<em/>
     ]]></description>
 
-<!--    <change-notes><![CDATA[-->
-<!--        <ul>-->
-<!--            <li><em>1.0.0</em>-->
-<!--                <ul>-->
-<!--                    <li>First stable version released. See description for details.</li>-->
-<!--                </ul>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    ]]>-->
-<!--    </change-notes>-->
+    <change-notes><![CDATA[
+        <ul>
+            <li>v0.0.1
+                <ul>
+                    <li>First stable version released. See description for details.</li>
+                </ul>
+            </li>
+        </ul>
+    ]]>
+    </change-notes>
 
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
