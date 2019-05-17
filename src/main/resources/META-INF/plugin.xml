@@ -4,9 +4,11 @@
     <vendor email="a.ferenczi.andras@gmail.com">Andras Ferenczi</vendor>
 
     <depends>Dart</depends>
+    <!--    To prevent it from being legacy-->
+    <depends>com.intellij.modules.lang</depends>
 
-    <!-- 2017.2 -->
-    <idea-version since-build="172"/>
+    <!-- 2018.3 - Based on Jetbrain's compatibility verification -->
+    <idea-version since-build="183"/>
 
     <description><![CDATA[
         <p>Essential utility methods generator for Dart data classes.</p>
@@ -28,6 +30,11 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.0.2
+                <ul>
+                    <li>Plugin.xml configuration problems fix.</li>
+                </ul>
+            </li>
             <li>v0.0.1
                 <ul>
                     <li>First stable version released. See description for details.</li>
