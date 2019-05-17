@@ -2,17 +2,27 @@ package andrasferenczi.ext.psi
 
 import andrasferenczi.traversal.TraversalType
 import andrasferenczi.traversal.createPsiFilterTraversal
-import andrasferenczi.traversal.createPsiTraversal
 import com.intellij.psi.PsiElement
-import com.intellij.psi.util.siblings
-import com.sun.org.apache.xpath.internal.operations.Bool
-import java.util.*
+
+/**
+ * No such method error with this function, hence the name to distinguish.
+ */
+fun PsiElement.mySiblings(forward: Boolean = true): Sequence<PsiElement> {
+    return generateSequence(this) {
+        if (forward) {
+            it.nextSibling
+        }
+        else {
+            it.prevSibling
+        }
+    }
+}
 
 /**
  * Does not omit children that are PsiWhiteSpace or LeafPsiNode
  */
 fun PsiElement.allChildren(): Sequence<PsiElement> {
-    return firstChild?.siblings() ?: emptySequence()
+    return firstChild?.mySiblings() ?: emptySequence()
 }
 
 fun PsiElement.listChildrenRecursivelyForDebug(depth: Int = 5): List<Any> {

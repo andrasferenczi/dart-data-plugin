@@ -2,10 +2,10 @@ package andrasferenczi.ext
 
 import andrasferenczi.DartFileNotWellFormattedException
 import andrasferenczi.ext.psi.body
+import andrasferenczi.ext.psi.mySiblings
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
-import com.intellij.psi.util.siblings
 import com.jetbrains.lang.dart.psi.DartClass
 
 fun Editor.evalAnchorInClass(dartClass: DartClass): PsiElement {
@@ -18,7 +18,7 @@ fun Editor.evalAnchorInClass(dartClass: DartClass): PsiElement {
         .lastOrNull { it.textRange.startOffset > caretOffset }
 
     return lastValidChild
-        ?.siblings()
+        ?.mySiblings()
         ?.filter { it is PsiWhiteSpace || it.text == ";" }
         ?.lastOrNull()
         ?: body
