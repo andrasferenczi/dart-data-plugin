@@ -12,8 +12,6 @@ This plugin can generate the following code:
 - `toMap`: converts your class into a map of `Map<String, dynamic>`
 - `fromMap`: constructs your class from a `Map<String, dynamic>` using the named argument constructor
 
----
-
 ## Example
 
 Let's say you have a class called `Person` with the properties:
@@ -83,10 +81,6 @@ class Person {
 }
 ```
 
-
-
----
-
 ## Settings
 
 ![ScreenShot](img/settings-menu.png)
@@ -97,8 +91,7 @@ You can find additional settings under `Settings` > `Editor` > `Dart Data Class 
 - use `@required` annotation
 - use `new` keyword when instantiation
 
----
 
-### Under the hood
+#### Under the hood
 
-This project is built using Kotlin and makes use of IntelliJ's PSI elements for extracting the structure of your the Dart file of your selection.
+This project is built using Kotlin and makes use of IntelliJ's PSI elements for extracting the structure of the Dart file of your selection.
