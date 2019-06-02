@@ -88,6 +88,20 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         }
     )
 
+    // ROW 5
+    val optimizeConstCopyCheckbox = JCheckBox(
+        "copy function should return the same instance if the only passed in variables are private"
+    )
+    pane.add(
+        optimizeConstCopyCheckbox,
+        GridBagConstraints().apply {
+            fill = GridBagConstraints.HORIZONTAL
+            gridx = 0
+            gridy = 4
+            insets = Insets(TOP_INSET, CHECKBOX_LEFT_INSET, BOTTOM_INSET, RIGHT_INSET)
+        }
+    )
+
 
     // Remaining space
     pane.add(
@@ -95,7 +109,7 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         GridBagConstraints().apply {
             weighty = 1.0   // request any extra vertical space
             anchor = GridBagConstraints.PAGE_END // bottom of space
-            gridy = 4
+            gridy = 5
             gridwidth = 2
         }
     )
@@ -105,6 +119,7 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         copyWithNameTextField,
         useRequiredAnnotationCheckBox,
         useNewKeywordCheckbox,
-        useConstKeywordForConstructorCheckbox
+        useConstKeywordForConstructorCheckbox,
+        optimizeConstCopyCheckbox
     )
 }

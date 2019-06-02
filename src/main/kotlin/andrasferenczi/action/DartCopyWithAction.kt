@@ -4,7 +4,7 @@ import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.utils.createCopyWithDeleteCall
 import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
-import andrasferenczi.declaration.canBeAssignedFromConstructor
+import andrasferenczi.declaration.allMembersFinal
 import andrasferenczi.declaration.fullTypeName
 import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.evalAnchorInClass
@@ -37,6 +37,7 @@ class DartCopyWithAction : BaseAnAction() {
         val templateManager = TemplateManager.getInstance(project)
         val configuration = ConfigurationDataManager.retrieveData(project)
         val dartClassName = dartClass.extractClassName()
+        val generateOptimizedCopy = configuration.optimizeConstCopy && declarations.allMembersFinal()
 
         val template = createCopyWithConstructorTemplate(
             templateManager,
@@ -44,7 +45,8 @@ class DartCopyWithAction : BaseAnAction() {
                 className = dartClassName,
                 variables = variableNames,
                 copyWithMethodName = configuration.copyWithMethodName,
-                useNewKeyword = configuration.useNewKeyword
+                useNewKeyword = configuration.useNewKeyword,
+                generateOptimizedCopy = generateOptimizedCopy
             )
         )
 

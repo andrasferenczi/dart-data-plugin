@@ -8,7 +8,8 @@ data class CopyWithTemplateParams(
     val className: String,
     val variables: List<AliasedVariableTemplateParam>,
     val copyWithMethodName: String,
-    val useNewKeyword: Boolean
+    val useNewKeyword: Boolean,
+    val generateOptimizedCopy: Boolean
 )
 
 fun createCopyWithConstructorTemplate(
@@ -16,7 +17,7 @@ fun createCopyWithConstructorTemplate(
     params: CopyWithTemplateParams
 ): Template {
 
-    val (className, variables, copyWithMethodName, useNewKeyword) = params
+    val (className, variables, copyWithMethodName, useNewKeyword, generateOptimizedCopy) = params
 
     return templateManager.createTemplate(
         TemplateType.CopyWithMethod.templateKey,
@@ -46,6 +47,49 @@ fun createCopyWithConstructorTemplate(
 
         withCurlyBraces {
             addNewLine()
+
+            if (generateOptimizedCopy) {
+                addTextSegment("if")
+                addSpace()
+                withParentheses {
+                    variables.forEachIndexed { index, variable ->
+                        withParentheses {
+                            addTextSegment(variable.publicVariableName)
+                            addSpace()
+                            addTextSegment("==")
+                            addSpace()
+                            addTextSegment("null")
+                            addSpace()
+                            addTextSegment("||")
+                            addSpace()
+                            addTextSegment("identical")
+                            withParentheses {
+                                addTextSegment(variable.publicVariableName)
+                                addComma()
+                                addTextSegment("this.")
+                                addTextSegment(variable.variableName)
+                            }
+                        }
+
+                        if (index != variables.lastIndex) {
+                            addSpace()
+                            addTextSegment("&&")
+                            addNewLine()
+                        }
+                    }
+                }
+
+                withCurlyBraces {
+                    addNewLine()
+                    addTextSegment("return")
+                    addSpace()
+                    addTextSegment("this")
+                    addSemicolon()
+                    addNewLine()
+                }
+                addNewLine()
+                addNewLine()
+            }
 
             addTextSegment("return")
             addSpace()
