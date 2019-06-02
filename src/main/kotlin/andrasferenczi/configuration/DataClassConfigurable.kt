@@ -31,7 +31,7 @@ class DataClassConfigurable(
     }
 
     override fun createComponent(): JComponent? {
-        // Test data will be replaced in the reset() call with the right values
+        // This data will be replaced in the reset() call with the right values
         val ui = createConfigurationUI(ConfigurationData.TEST_DATA)
         this.uiElements = ui
 

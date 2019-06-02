@@ -10,7 +10,8 @@ class ConfigurationUIElements(
 
     val copyWithNameTextField: JTextField,
     val useRequiredAnnotationCheckBox: JCheckBox,
-    val useNewKeywordCheckbox: JCheckBox
+    val useNewKeywordCheckbox: JCheckBox,
+    val useConstKeywordForConstructorCheckbox: JCheckBox
 ) {
 
 
@@ -18,7 +19,8 @@ class ConfigurationUIElements(
         return ConfigurationData(
             copyWithMethodName = copyWithNameTextField.text,
             useRequiredAnnotation = useRequiredAnnotationCheckBox.isSelected,
-            useNewKeyword = useNewKeywordCheckbox.isSelected
+            useNewKeyword = useNewKeywordCheckbox.isSelected,
+            useConstForConstructor = useConstKeywordForConstructorCheckbox.isSelected
         )
     }
 
@@ -26,6 +28,7 @@ class ConfigurationUIElements(
         copyWithNameTextField.text = configurationData.copyWithMethodName
         useRequiredAnnotationCheckBox.isSelected = configurationData.useRequiredAnnotation
         useNewKeywordCheckbox.isSelected = configurationData.useNewKeyword
+        useConstKeywordForConstructorCheckbox.isSelected = configurationData.useConstForConstructor
     }
 
 }

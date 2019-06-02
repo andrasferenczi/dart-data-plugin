@@ -8,20 +8,26 @@ data class ConstructorTemplateParams(
     val className: String,
     val publicVariables: List<PublicVariableTemplateParam>,
     val privateVariables: List<AliasedVariableTemplateParam>,
-    val addRequiredAnnotation: Boolean
+    val addRequiredAnnotation: Boolean,
+    val addConstQualifier: Boolean
 )
 
 fun createConstructorTemplate(
     templateManager: TemplateManager,
     params: ConstructorTemplateParams
 ): Template {
-    val (className, publicVariableNames, privateVariables, addRequiredAnnotation) = params
+    val (className, publicVariableNames, privateVariables, addRequiredAnnotation, addConstQualifier) = params
 
     return templateManager.createTemplate(
         TemplateType.NamedParameterConstructor.templateKey,
         TemplateConstants.DART_TEMPLATE_GROUP
     ).apply {
         isToReformat = true
+
+        if (addConstQualifier) {
+            addTextSegment("const")
+            addTextSegment(" ")
+        }
 
         addTextSegment(className)
         withParentheses {

@@ -62,18 +62,33 @@ val VariableDeclarationPsiElements.isPrivate: Boolean
 val VariableDeclarationPsiElements.isPublic: Boolean
     get() = !isPrivate
 
+val VariableDeclarationPsiElements.isStatic: Boolean
+    get() = hasModifier(DeclarationModifier.Static)
+
+val VariableDeclarationPsiElements.isMember: Boolean
+    get() = !isStatic
+
+val VariableDeclarationPsiElements.isFinal: Boolean
+    get() = hasModifier(DeclarationModifier.Final)
+
 val VariableDeclarationPsiElements.canBeAssignedFromConstructor: Boolean
     get() {
         val isStatic = hasModifier(DeclarationModifier.Static)
         // Static or static const makes no difference
-        if(isStatic) {
+        if (isStatic) {
             return false
         }
 
         val isFinal = hasModifier(DeclarationModifier.Final)
-        if(isFinal && hasInitializer) {
+        if (isFinal && hasInitializer) {
             return false
         }
 
         return true
     }
+
+fun Iterable<VariableDeclarationPsiElements>.allMembersFinal(): Boolean {
+    return this.asSequence()
+        .filter { it.isMember }
+        .all { it.isFinal }
+}

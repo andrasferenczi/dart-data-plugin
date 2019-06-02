@@ -45,6 +45,7 @@ class NamedArgumentConstructorAction : BaseAnAction() {
         val templateManager = TemplateManager.getInstance(project)
         val configuration = ConfigurationDataManager.retrieveData(project)
         val dartClassName = dartClass.extractClassName()
+        val addConstQualifier = configuration.useConstForConstructor && declarations.allMembersFinal()
 
         val template = createConstructorTemplate(
             templateManager,
@@ -52,7 +53,8 @@ class NamedArgumentConstructorAction : BaseAnAction() {
                 className = dartClassName,
                 publicVariables = publicVariables,
                 privateVariables = privateVariables,
-                addRequiredAnnotation = configuration.useRequiredAnnotation
+                addRequiredAnnotation = configuration.useRequiredAnnotation,
+                addConstQualifier = addConstQualifier
             )
         )
 

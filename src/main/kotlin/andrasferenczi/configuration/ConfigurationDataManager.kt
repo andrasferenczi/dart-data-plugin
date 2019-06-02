@@ -28,6 +28,13 @@ object ConfigurationDataManager {
             )
         )
 
+        configuration = configuration.copy(
+            useConstForConstructor = properties.getBoolean(
+                Keys.USE_CONST_KEYWORD_FOR_CONSTRUCTOR,
+                configuration.useConstForConstructor
+            )
+        )
+
         return configuration
     }
 
@@ -51,11 +58,17 @@ object ConfigurationDataManager {
             configurationData.useNewKeyword,
             ConfigurationData.DEFAULT_DATA.useNewKeyword
         )
+        properties.setValue(
+            Keys.USE_CONST_KEYWORD_FOR_CONSTRUCTOR,
+            configurationData.useConstForConstructor,
+            ConfigurationData.DEFAULT_DATA.useConstForConstructor
+        )
     }
 
     private object Keys {
         const val COPY_WITH_METHOD_NAME = "dart-data-class.copy-with-method-name"
         const val USE_REQUIRED_ANNOTATION = "dart-data-class.use-required-annotation"
         const val USE_NEW_KEYWORD = "dart-data-class.use-new-keyword"
+        const val USE_CONST_KEYWORD_FOR_CONSTRUCTOR = "dart-data-class.use-const-keyword-for-constructor"
     }
 }
