@@ -120,12 +120,12 @@ private val privateToUniquePublicVariableNameTransformations = listOf<(variableN
 // Function keeps name if not private
 // If 2 same-named variables exist, there will be errors anyway in the user's code
 private fun createUniquePublicVariableName(variableName: String, existingNames: Set<String>): String {
-    if (variableName.isBlank() || variableName.length == 1) {
-        throw RuntimeException("Variable name $variableName is not a valid name")
-    }
-
     if (!isVariableNamePrivate(variableName)) {
         return variableName
+    }
+
+    if (variableName.isBlank() || variableName == "_") {
+        throw RuntimeException("Variable name $variableName is not a valid name")
     }
 
     val newVarName = privateToUniquePublicVariableNameTransformations.asSequence()
