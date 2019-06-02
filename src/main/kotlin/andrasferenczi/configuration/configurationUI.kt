@@ -102,6 +102,20 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         }
     )
 
+    // ROW 6
+    val addKeyMapperForMapCheckbox = JCheckBox(
+        "add key mapper function parameter for `toMap` and `fromMap`"
+    )
+
+    pane.add(
+        addKeyMapperForMapCheckbox,
+        GridBagConstraints().apply {
+            fill = GridBagConstraints.HORIZONTAL
+            gridx = 0
+            gridy = 5
+            insets = Insets(TOP_INSET, CHECKBOX_LEFT_INSET, BOTTOM_INSET, RIGHT_INSET)
+        }
+    )
 
     // Remaining space
     pane.add(
@@ -109,7 +123,7 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         GridBagConstraints().apply {
             weighty = 1.0   // request any extra vertical space
             anchor = GridBagConstraints.PAGE_END // bottom of space
-            gridy = 5
+            gridy = 6
             gridwidth = 2
         }
     )
@@ -120,6 +134,7 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         useRequiredAnnotationCheckBox,
         useNewKeywordCheckbox,
         useConstKeywordForConstructorCheckbox,
-        optimizeConstCopyCheckbox
+        optimizeConstCopyCheckbox,
+        addKeyMapperForMapCheckbox
     )
 }

@@ -16,7 +16,6 @@ class DataClassConfigurable(
     private val currentConfigurationData: ConfigurationData?
         get() = uiElements?.extractCurrentConfigurationData()
 
-    // TODO
     override fun isModified(): Boolean {
         return currentConfigurationData != lastSavedConfigurationData
     }
@@ -49,18 +48,4 @@ class DataClassConfigurable(
 
         this.uiElements?.setFields(lastSavedConfigurationData)
     }
-
-//    @NotNull
-//    fun getScriptPath(project: Project): String? {
-//        val properties = PropertiesComponent.getInstance(project)
-//        var path = properties.getValue(PATH_KEY)
-//
-//        if (path == null || path.trim { it <= ' ' }.isEmpty()) {
-//            path = DEFAULT_FILE
-//        } else {
-//            path = path.trim { it <= ' ' }
-//        }
-//
-//        return path
-//    }
 }

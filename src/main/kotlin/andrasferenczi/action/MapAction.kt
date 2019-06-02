@@ -46,7 +46,8 @@ class MapAction : BaseAnAction() {
             JsonTemplateParams(
                 className = dartClassName,
                 variables = variableNames,
-                useNewKeyword = configuration.useNewKeyword
+                useNewKeyword = configuration.useNewKeyword,
+                addKeyMapper = configuration.addKeyMapperForMap
             )
         )
 

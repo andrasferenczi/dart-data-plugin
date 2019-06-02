@@ -42,6 +42,13 @@ object ConfigurationDataManager {
             )
         )
 
+        configuration = configuration.copy(
+            addKeyMapperForMap = properties.getBoolean(
+                Keys.ADD_KEY_MAPPER_FOR_MAP,
+                configuration.addKeyMapperForMap
+            )
+        )
+
         return configuration
     }
 
@@ -76,6 +83,12 @@ object ConfigurationDataManager {
             configurationData.optimizeConstCopy,
             ConfigurationData.DEFAULT_DATA.optimizeConstCopy
         )
+
+        properties.setValue(
+            Keys.ADD_KEY_MAPPER_FOR_MAP,
+            configurationData.addKeyMapperForMap,
+            ConfigurationData.DEFAULT_DATA.addKeyMapperForMap
+        )
     }
 
     private object Keys {
@@ -83,6 +96,7 @@ object ConfigurationDataManager {
         const val USE_REQUIRED_ANNOTATION = "dart-data-class.use-required-annotation"
         const val USE_NEW_KEYWORD = "dart-data-class.use-new-keyword"
         const val USE_CONST_KEYWORD_FOR_CONSTRUCTOR = "dart-data-class.use-const-keyword-for-constructor"
-        const val OPTIMIZE_CONSTANT_COPY = "data-data-class.optimize-constant-copy"
+        const val OPTIMIZE_CONSTANT_COPY = "dart-data-class.optimize-constant-copy"
+        const val ADD_KEY_MAPPER_FOR_MAP = "dart-data-class.add-key-mapper-for-map"
     }
 }

@@ -12,7 +12,8 @@ class ConfigurationUIElements(
     val useRequiredAnnotationCheckBox: JCheckBox,
     val useNewKeywordCheckbox: JCheckBox,
     val useConstKeywordForConstructorCheckbox: JCheckBox,
-    val optimizeConstCopyCheckbox: JCheckBox
+    val optimizeConstCopyCheckbox: JCheckBox,
+    val addKeyMapperForMapCheckbox: JCheckBox
 ) {
 
 
@@ -22,7 +23,8 @@ class ConfigurationUIElements(
             useRequiredAnnotation = useRequiredAnnotationCheckBox.isSelected,
             useNewKeyword = useNewKeywordCheckbox.isSelected,
             useConstForConstructor = useConstKeywordForConstructorCheckbox.isSelected,
-            optimizeConstCopy = optimizeConstCopyCheckbox.isSelected
+            optimizeConstCopy = optimizeConstCopyCheckbox.isSelected,
+            addKeyMapperForMap = addKeyMapperForMapCheckbox.isSelected
         )
     }
 
@@ -32,6 +34,7 @@ class ConfigurationUIElements(
         useNewKeywordCheckbox.isSelected = configurationData.useNewKeyword
         useConstKeywordForConstructorCheckbox.isSelected = configurationData.useConstForConstructor
         optimizeConstCopyCheckbox.isSelected = configurationData.optimizeConstCopy
+        addKeyMapperForMapCheckbox.isSelected = configurationData.addKeyMapperForMap
     }
 
 }

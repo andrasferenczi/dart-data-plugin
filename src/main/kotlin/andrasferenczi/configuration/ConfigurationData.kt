@@ -9,7 +9,8 @@ data class ConfigurationData(
     val useRequiredAnnotation: Boolean,
     val useNewKeyword: Boolean,
     val useConstForConstructor: Boolean,
-    val optimizeConstCopy: Boolean
+    val optimizeConstCopy: Boolean,
+    val addKeyMapperForMap: Boolean
 ) {
     companion object {
         val DEFAULT_DATA = ConfigurationData(
@@ -17,7 +18,8 @@ data class ConfigurationData(
             useRequiredAnnotation = true,
             useNewKeyword = true,
             useConstForConstructor = true,
-            optimizeConstCopy = false
+            optimizeConstCopy = false,
+            addKeyMapperForMap = false
         )
 
         val TEST_DATA = ConfigurationData(
@@ -25,7 +27,8 @@ data class ConfigurationData(
             useRequiredAnnotation = true,
             useNewKeyword = false,
             useConstForConstructor = false,
-            optimizeConstCopy = false
+            optimizeConstCopy = false,
+            addKeyMapperForMap = false
         )
 
     }

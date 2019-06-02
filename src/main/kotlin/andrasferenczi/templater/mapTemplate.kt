@@ -7,7 +7,8 @@ import com.intellij.codeInsight.template.TemplateManager
 data class JsonTemplateParams(
     val className: String,
     val variables: List<AliasedVariableTemplateParam>,
-    val useNewKeyword: Boolean
+    val useNewKeyword: Boolean,
+    val addKeyMapper: Boolean
 )
 
 // The 2 will be generated with the same function
@@ -27,24 +28,65 @@ fun createMapTemplate(
     }
 }
 
+private fun Template.addAssignKeyMapperIfNotValid() {
+    addTextSegment(TemplateConstants.KEYMAPPER_VARIABLE_NAME)
+    addSpace()
+    addTextSegment("??=")
+    addSpace()
+    withParentheses {
+        addTextSegment(TemplateConstants.KEY_VARIABLE_NAME)
+    }
+    addSpace()
+    addTextSegment("=>")
+    addSpace()
+    addTextSegment(TemplateConstants.KEY_VARIABLE_NAME)
+    addSemicolon()
+    addNewLine()
+    addNewLine()
+}
+
 private fun Template.addToMap(params: JsonTemplateParams) {
-    val (_, variables, _) = params
+    val (_, variables, _, addKeyMapper) = params
 
     isToReformat = true
 
     addTextSegment("Map<String, dynamic>")
     addSpace()
     addTextSegment(TemplateConstants.TO_MAP_METHOD_NAME)
-    addTextSegment("()")
+    withParentheses {
+        if (addKeyMapper) {
+            withCurlyBraces {
+                addNewLine()
+                addTextSegment("String ${TemplateConstants.KEYMAPPER_VARIABLE_NAME}(String key)")
+                addComma()
+                addNewLine()
+            }
+        }
+    }
     addSpace()
     withCurlyBraces {
+
+        if (addKeyMapper) {
+            addAssignKeyMapperIfNotValid()
+        }
+
         addTextSegment("return")
         addSpace()
         withCurlyBraces {
             addNewLine()
 
             variables.forEach {
-                addTextSegment("'${it.mapKeyString}'")
+                "'${it.mapKeyString}'".also { keyParam ->
+                    if (addKeyMapper) {
+                        addTextSegment(TemplateConstants.KEYMAPPER_VARIABLE_NAME)
+                        withParentheses {
+                            addTextSegment(keyParam)
+                        }
+                    } else {
+                        addTextSegment(keyParam)
+                    }
+                }
+
                 addTextSegment(":")
                 addSpace()
                 addTextSegment("this.")
@@ -60,7 +102,7 @@ private fun Template.addToMap(params: JsonTemplateParams) {
 private fun Template.addFromMap(
     params: JsonTemplateParams
 ) {
-    val (className, variables, useNewKeyword) = params
+    val (className, variables, useNewKeyword, addKeyMapper) = params
 
     isToReformat = true
 
@@ -70,12 +112,40 @@ private fun Template.addFromMap(
     addTextSegment(".")
     addTextSegment(TemplateConstants.FROM_MAP_METHOD_NAME)
     withParentheses {
+        if (addKeyMapper) {
+            addNewLine()
+            // New line does not format, no matter what is in this if statement
+            addSpace()
+        }
         addTextSegment("Map<String, dynamic>")
         addSpace()
         addTextSegment(TemplateConstants.MAP_VARIABLE_NAME)
+
+        if (addKeyMapper) {
+            addComma()
+            addSpace()
+            withCurlyBraces {
+                addNewLine()
+                addTextSegment("String")
+                addSpace()
+                addTextSegment(TemplateConstants.KEYMAPPER_VARIABLE_NAME)
+                withParentheses {
+                    addTextSegment("String")
+                    addSpace()
+                    addTextSegment(TemplateConstants.KEY_VARIABLE_NAME)
+                }
+                addComma()
+                addNewLine()
+            }
+        }
     }
     addSpace()
     withCurlyBraces {
+
+        if (addKeyMapper) {
+            addAssignKeyMapperIfNotValid()
+        }
+
         addTextSegment("return")
         addSpace()
         if (useNewKeyword) {
@@ -90,7 +160,19 @@ private fun Template.addFromMap(
                 addTextSegment(":")
                 addSpace()
                 addTextSegment(TemplateConstants.MAP_VARIABLE_NAME)
-                addTextSegment("['${it.mapKeyString}']")
+
+                withBrackets {
+                    "'${it.mapKeyString}'".also { keyParam ->
+                        if (addKeyMapper) {
+                            addTextSegment(TemplateConstants.KEYMAPPER_VARIABLE_NAME)
+                            withParentheses {
+                                addTextSegment(keyParam)
+                            }
+                        } else {
+                            addTextSegment(keyParam)
+                        }
+                    }
+                }
                 addComma()
                 addNewLine()
             }
