@@ -18,5 +18,7 @@ fun DartClassDefinition.extractClassName(): String =
 
 fun DartClassDefinition.listMethods(): Sequence<DartMethodDeclaration> = findChildrenByType()
 
+// Only this can find the equals method with the ==
+// This also looks for operators
 fun DartClassDefinition.findMethodsByName(name: String): Sequence<DartMethodDeclaration> =
     listMethods().filter { it.name == name }

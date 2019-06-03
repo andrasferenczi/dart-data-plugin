@@ -5,6 +5,10 @@ interface NamedVariableTemplateParam {
     val variableName: String
 }
 
+class NamedVariableTemplateParamImpl(
+    override val variableName: String
+) : NamedVariableTemplateParam
+
 interface TypedVariableTemplateParam : NamedVariableTemplateParam {
     // Full type name, like Map<String, int>
     // (no imports needed, since this should be already in the class)

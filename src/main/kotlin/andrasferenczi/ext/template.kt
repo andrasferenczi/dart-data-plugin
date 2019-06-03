@@ -23,6 +23,12 @@ inline fun Template.withBrackets(action: Template.() -> Unit) {
     this.addTextSegment("]")
 }
 
+inline fun Template.withSingleQuotes(action: Template.() -> Unit) {
+    this.addTextSegment("'")
+    this.action()
+    this.addTextSegment("'")
+}
+
 
 // For different editor highlight in case of dividers
 
@@ -33,6 +39,8 @@ fun Template.addSemicolon() = this.addTextSegment(";")
 fun Template.addSpace() = this.addTextSegment(" ")
 
 fun Template.addComma() = this.addTextSegment(",")
+
+fun Template.addDot() = this.addTextSegment(".")
 
 @Deprecated(
     "If 2 templates are combined, the anchor will not be placed at the right position. " +

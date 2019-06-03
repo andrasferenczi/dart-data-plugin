@@ -6,5 +6,11 @@ enum class TemplateType(
     NamedParameterConstructor("named_parameter_constructor"),
     CopyWithMethod("copy_with__method"),
     MapTemplate("to_map__from_map"),
-    Combined("combined")
+    Combined("combined"),
+
+    ToString("to_string"),
+    Equals("equals"),
+    HashCode("hashcode"),
+
+    Comment("comment")
 }

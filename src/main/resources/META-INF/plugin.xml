@@ -78,7 +78,14 @@
                 text="toMap() and fromMap()">
             <add-to-group group-id="GenerateGroup"
                           anchor="after"
-                          relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
+                          relative-to-action="andrasferenczi.action.DartCopyWithAction"/>
+        </action>
+        <action id="andrasferenczi.action.FullDataAction"
+                class="andrasferenczi.action.FullDataAction"
+                text="Full Data">
+            <add-to-group group-id="GenerateGroup"
+                          anchor="after"
+                          relative-to-action="andrasferenczi.action.MapAction"/>
         </action>
     </actions>
 </idea-plugin>
