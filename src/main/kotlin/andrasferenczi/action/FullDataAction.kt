@@ -9,10 +9,13 @@ import andrasferenczi.action.my.MyHashCodeAction
 import andrasferenczi.action.my.MyToStringAction
 import andrasferenczi.action.utils.*
 import andrasferenczi.ext.addNewLine
+import andrasferenczi.ext.addSpace
+import andrasferenczi.ext.createDartTemplate
 import andrasferenczi.ext.psi.commentContent
 import andrasferenczi.ext.psi.findChildrenByType
 import andrasferenczi.ext.psi.isTopClassLevel
 import andrasferenczi.templater.TemplateConstants
+import andrasferenczi.templater.TemplateType
 import andrasferenczi.traversal.TraversalType
 import com.intellij.codeInsight.template.Template
 import com.intellij.codeInsight.template.TemplateManager
@@ -47,9 +50,9 @@ class FullDataAction : BaseAnAction() {
 
         return listOf(
             // TODO
-//            processCommentBeginAction(dartClass, templateManager),
-            *processActions.toTypedArray()
-//            processCommentEndAction(templateManager)
+            processCommentBeginAction(dartClass, templateManager),
+            *processActions.toTypedArray(),
+            processCommentEndAction(templateManager)
         )
             .combineAll()
 
@@ -121,9 +124,11 @@ class FullDataAction : BaseAnAction() {
         }
 
         private fun TemplateManager.createCommentBeginTemplate(): Template {
-            return createTemplate("begin_comment", "comment")
+            return createDartTemplate(TemplateType.Comment)
                 .apply {
                     addNewLine()
+                    addSpace()
+                    addSpace()
                     addTextSegment("//")
                     addTextSegment(createCommentBeginContent())
                     addNewLine()
@@ -131,9 +136,11 @@ class FullDataAction : BaseAnAction() {
         }
 
         private fun TemplateManager.createCommentEndTemplate(): Template {
-            return createTemplate("end_comment", "comment")
+            return createDartTemplate(TemplateType.Comment)
                 .apply {
                     addNewLine()
+                    addSpace()
+                    addSpace()
                     addTextSegment("//")
                     addTextSegment(createCommentEndContent())
                     addNewLine()

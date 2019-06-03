@@ -82,7 +82,7 @@
         </action>
         <action id="andrasferenczi.action.FullDataAction"
                 class="andrasferenczi.action.FullDataAction"
-                text="Full Data">
+                text="Data Class Section">
             <add-to-group group-id="GenerateGroup"
                           anchor="after"
                           relative-to-action="andrasferenczi.action.MapAction"/>

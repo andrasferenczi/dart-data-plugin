@@ -28,6 +28,11 @@ fun createHashCodeTemplate(
             addTextSegment("=>")
             addNewLine()
 
+            if(variables.isEmpty()) {
+                // Just a 0
+                addTextSegment("0")
+            }
+
             variables.forEachIndexed { index, variable ->
                 addTextSegment(variable.variableName)
                 addDot()

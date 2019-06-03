@@ -52,6 +52,12 @@ fun createCopyWithConstructorTemplate(
                 addTextSegment("if")
                 addSpace()
                 withParentheses {
+
+                    if(variables.isEmpty()) {
+                        // Always return if empty class
+                        addTextSegment("true")
+                    }
+
                     variables.forEachIndexed { index, variable ->
                         withParentheses {
                             addTextSegment(variable.publicVariableName)

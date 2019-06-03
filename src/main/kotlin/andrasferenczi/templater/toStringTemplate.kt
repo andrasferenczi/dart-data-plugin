@@ -45,6 +45,7 @@ fun createToStringTemplate(
 
             variables.forEach { variable ->
                 withSingleQuotes {
+                    addSpace()
                     addTextSegment(variable.variableName)
                     addTextSegment(":")
                     addSpace()
