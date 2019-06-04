@@ -30,6 +30,15 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.0.3
+                <ul>
+                    <li>Fixed an error with single character field names.</li>
+                    <li>New action to generate all data class methods at once.</li>
+                    <li>Optimized copy method option for Redux architecture.</li>
+                    <li>Added key transformation function to map methods.</li>
+                    <li>Const qualifier for classes with final-only fields.</li>
+                </ul>
+            </li>
             <li>v0.0.2
                 <ul>
                     <li>Plugin.xml configuration problems fix.</li>
