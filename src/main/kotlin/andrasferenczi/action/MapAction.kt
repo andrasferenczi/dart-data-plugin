@@ -11,7 +11,7 @@ import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.psi.extractClassName
 import andrasferenczi.templater.AliasedVariableTemplateParam
 import andrasferenczi.templater.AliasedVariableTemplateParamImpl
-import andrasferenczi.templater.JsonTemplateParams
+import andrasferenczi.templater.MapTemplateParams
 import andrasferenczi.templater.createMapTemplate
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -31,7 +31,7 @@ class MapAction : BaseAnAction() {
         )
     }
 
-    companion object : StaticActionProcessor{
+    companion object : StaticActionProcessor {
 
         override fun processAction(generationData: GenerationData): PerformAction {
             val (actionData, dartClass, declarations) = generationData
@@ -54,11 +54,12 @@ class MapAction : BaseAnAction() {
 
             val template = createMapTemplate(
                 templateManager,
-                JsonTemplateParams(
+                MapTemplateParams(
                     className = dartClassName,
                     variables = variableNames,
                     useNewKeyword = configuration.useNewKeyword,
-                    addKeyMapper = configuration.addKeyMapperForMap
+                    addKeyMapper = configuration.addKeyMapperForMap,
+                    noImplicitCasts = configuration.noImplicitCasts
                 )
             )
 

@@ -117,13 +117,28 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         }
     )
 
+    // ROW 7
+    val noImplicitCastsCheckbox = JCheckBox(
+        "no implicit casts"
+    )
+
+    pane.add(
+        noImplicitCastsCheckbox,
+        GridBagConstraints().apply {
+            fill = GridBagConstraints.HORIZONTAL
+            gridx = 0
+            gridy = 6
+            insets = Insets(TOP_INSET, CHECKBOX_LEFT_INSET, BOTTOM_INSET, RIGHT_INSET)
+        }
+    )
+
     // Remaining space
     pane.add(
         JPanel(),
         GridBagConstraints().apply {
             weighty = 1.0   // request any extra vertical space
             anchor = GridBagConstraints.PAGE_END // bottom of space
-            gridy = 6
+            gridy = 7
             gridwidth = 2
         }
     )
@@ -135,6 +150,7 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         useNewKeywordCheckbox,
         useConstKeywordForConstructorCheckbox,
         optimizeConstCopyCheckbox,
-        addKeyMapperForMapCheckbox
+        addKeyMapperForMapCheckbox,
+        noImplicitCastsCheckbox
     )
 }

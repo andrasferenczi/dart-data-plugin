@@ -4,17 +4,18 @@ import andrasferenczi.ext.*
 import com.intellij.codeInsight.template.Template
 import com.intellij.codeInsight.template.TemplateManager
 
-data class JsonTemplateParams(
+data class MapTemplateParams(
     val className: String,
     val variables: List<AliasedVariableTemplateParam>,
     val useNewKeyword: Boolean,
-    val addKeyMapper: Boolean
+    val addKeyMapper: Boolean,
+    val noImplicitCasts: Boolean
 )
 
 // The 2 will be generated with the same function
 fun createMapTemplate(
     templateManager: TemplateManager,
-    params: JsonTemplateParams
+    params: MapTemplateParams
 ): Template {
 
     return templateManager.createTemplate(
@@ -45,8 +46,8 @@ private fun Template.addAssignKeyMapperIfNotValid() {
     addNewLine()
 }
 
-private fun Template.addToMap(params: JsonTemplateParams) {
-    val (_, variables, _, addKeyMapper) = params
+private fun Template.addToMap(params: MapTemplateParams) {
+    val (_, variables, _, addKeyMapper, _) = params
 
     isToReformat = true
 
@@ -100,9 +101,9 @@ private fun Template.addToMap(params: JsonTemplateParams) {
 }
 
 private fun Template.addFromMap(
-    params: JsonTemplateParams
+    params: MapTemplateParams
 ) {
-    val (className, variables, useNewKeyword, addKeyMapper) = params
+    val (className, variables, useNewKeyword, addKeyMapper, noImplicitCasts) = params
 
     isToReformat = true
 
@@ -173,6 +174,14 @@ private fun Template.addFromMap(
                         }
                     }
                 }
+
+                if(noImplicitCasts) {
+                    addSpace()
+                    addTextSegment("as")
+                    addSpace()
+                    addTextSegment(it.type)
+                }
+
                 addComma()
                 addNewLine()
             }

@@ -49,6 +49,13 @@ object ConfigurationDataManager {
             )
         )
 
+        configuration = configuration.copy(
+            noImplicitCasts = properties.getBoolean(
+                Keys.NO_IMPLICIT_CASTS,
+                configuration.noImplicitCasts
+            )
+        )
+
         return configuration
     }
 
@@ -89,6 +96,12 @@ object ConfigurationDataManager {
             configurationData.addKeyMapperForMap,
             ConfigurationData.DEFAULT_DATA.addKeyMapperForMap
         )
+
+        properties.setValue(
+            Keys.NO_IMPLICIT_CASTS,
+            configurationData.noImplicitCasts,
+            ConfigurationData.DEFAULT_DATA.noImplicitCasts
+        )
     }
 
     private object Keys {
@@ -98,5 +111,6 @@ object ConfigurationDataManager {
         const val USE_CONST_KEYWORD_FOR_CONSTRUCTOR = "dart-data-class.use-const-keyword-for-constructor"
         const val OPTIMIZE_CONSTANT_COPY = "dart-data-class.optimize-constant-copy"
         const val ADD_KEY_MAPPER_FOR_MAP = "dart-data-class.add-key-mapper-for-map"
+        const val NO_IMPLICIT_CASTS = "data-data-class.no-implicit-casts"
     }
 }
