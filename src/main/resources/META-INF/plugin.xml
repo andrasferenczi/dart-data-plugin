@@ -30,6 +30,12 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.0.5
+                <ul>
+                    <li>Added defaultstate="collapsed" for editor-fold comment</li>
+                    <li>Icon</li>
+                </ul>
+            </li>
             <li>v0.0.4
                 <ul>
                     <li>Option added for noImplicitCasts to support Dart strong-mode.</li>
