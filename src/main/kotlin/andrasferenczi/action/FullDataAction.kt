@@ -148,7 +148,7 @@ class FullDataAction : BaseAnAction() {
         }
 
         private fun createCommentBeginContent(): String =
-            "<editor-fold desc=\"${TemplateConstants.EDITOR_FOLD_DATA_CLASS_NAME}\">"
+            "<editor-fold desc=\"${TemplateConstants.EDITOR_FOLD_DATA_CLASS_NAME}\" defaultstate=\"collapsed\">"
 
         private fun createCommentEndContent(): String = "</editor-fold>"
 
