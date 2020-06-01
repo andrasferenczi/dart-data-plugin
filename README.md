@@ -1,3 +1,7 @@
+*Issue tracker repository for the IntelliJ plugin [`Dart Data Class`](https://plugins.jetbrains.com/plugin/12429-dart-data-class)*
+
+---
+
 # Dart Data Class Plugin
 
 ![Usage](img/dart-data-usage.gif)
@@ -27,7 +31,7 @@ class Person {
 }
 ```
 
-Using all generators of this plugin and selecting all properties, this class will look like the following. 
+A possible generation may look like this
 
 *(Note that some features of this generation can be customized, see details below.)*
 
@@ -40,49 +44,15 @@ class Person {
 
   String get name => _firstName + " " + _lastName;
 
-//<editor-fold desc="Data Methods">
-
+//<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   const Person({
     @required this.id,
     @required this.age,
     @required String firstName,
     @required String lastName,
-  })
-      : _firstName = firstName,
+  })  : _firstName = firstName,
         _lastName = lastName;
-
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          (other is Person &&
-              runtimeType == other.runtimeType &&
-              id == other.id &&
-              _firstName == other._firstName &&
-              _lastName == other._lastName &&
-              age == other.age
-          );
-
-
-  @override
-  int get hashCode =>
-      id.hashCode ^
-      _firstName.hashCode ^
-      _lastName.hashCode ^
-      age.hashCode;
-
-
-  @override
-  String toString() {
-    return 'Person{' +
-        ' id: $id,' +
-        ' _firstName: $_firstName,' +
-        ' _lastName: $_lastName,' +
-        ' age: $age,' +
-        '}';
-  }
-
 
   Person copyWith({
     int id,
@@ -105,38 +75,48 @@ class Person {
     );
   }
 
-
-  Map<String, dynamic> toMap({
-    String keyMapper(String key),
-  }) {
-    keyMapper ??= (key) => key;
-
-    return {
-      keyMapper('id'): this.id,
-      keyMapper('_firstName'): this._firstName,
-      keyMapper('_lastName'): this._lastName,
-      keyMapper('age'): this.age,
-    };
+  @override
+  String toString() {
+    return 'Person{id: $id, _firstName: $_firstName, _lastName: $_lastName, age: $age}';
   }
 
-  factory Person.fromMap(Map<String, dynamic> map, {
-    String keyMapper(String key),
-  }) {
-    keyMapper ??= (key) => key;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Person &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          _firstName == other._firstName &&
+          _lastName == other._lastName &&
+          age == other.age);
 
+  @override
+  int get hashCode =>
+      id.hashCode ^ _firstName.hashCode ^ _lastName.hashCode ^ age.hashCode;
+
+  factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
-      id: map[keyMapper('id')],
-      firstName: map[keyMapper('_firstName')],
-      lastName: map[keyMapper('_lastName')],
-      age: map[keyMapper('age')],
+      id: map['id'] as int,
+      firstName: map['_firstName'] as String,
+      lastName: map['_lastName'] as String,
+      age: map['age'] as int,
     );
   }
 
+  Map<String, dynamic> toMap() {
+    // ignore: unnecessary_cast
+    return {
+      'id': this.id,
+      '_firstName': this._firstName,
+      '_lastName': this._lastName,
+      'age': this.age,
+    } as Map<String, dynamic>;
+  }
 
 //</editor-fold>
+
 }
 ```
-
 ## Settings
 
 ![ScreenShot](img/settings-menu.png)
@@ -149,12 +129,9 @@ You can find additional settings under `Settings` > `Editor` > `Dart Data Class 
 - use the `const` keyword for the constructor generation - all fields in the class have to be final
 - copy function can be specified to return the same instance. This Option has the same requirement as the const keyword. Useful when using Dart in a Redux architecture.
 - key mapper for `toMap` and `fromMap` - use your own logic to transform the keys to their original values - useful when database result returns prefixed or uppercased result
+- `no implicit casts` fixes the `missing type arguments` error if you have your lint rules configured that way
 
 
 #### Under the hood
 
 This project is built using Kotlin and makes use of IntelliJ's PSI elements for extracting the structure of the Dart file of your selection.
-
-### Known issues
-
-- If the class ends with a single-line comment, code is generated from an invalid location
