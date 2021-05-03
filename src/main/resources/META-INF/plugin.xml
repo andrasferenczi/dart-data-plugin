@@ -1,0 +1,110 @@
+<idea-plugin>
+    <id>andrasferenczi.dart-data-plugin</id>
+    <name>Dart Data Class</name>
+    <vendor url="https://github.com/andrasferenczi/dart-data-plugin">Andras Ferenczi</vendor>
+
+    <depends>Dart</depends>
+    <!--    To prevent it from being legacy-->
+    <depends>com.intellij.modules.lang</depends>
+
+    <idea-version since-build="193"/>
+
+    <description><![CDATA[
+        <p>Essential utility methods generator for Dart data classes.</p>
+        <br/>
+        <br/>
+        <p>Features:</p>
+        <ul>
+            <li>Named argument constructor generator</li>
+            <li>copyWith() method generator</li>
+            <li>toJson() / fromJson() methods generator</li>
+        </ul>
+
+        <p>Featured with a couple additional settings.</p>
+        <br/>
+        <p>Find out more on the project's <a href="https://github.com/andrasferenczi/dart-data-plugin">Github page</a>.</p>
+        <br/>
+        <em>Not an official plugin.<em/>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <ul>
+            <li>v0.0.5
+                <ul>
+                    <li>Added defaultstate="collapsed" for editor-fold comment</li>
+                    <li>Icon</li>
+                </ul>
+            </li>
+            <li>v0.0.4
+                <ul>
+                    <li>Option added for noImplicitCasts to support Dart strong-mode.</li>
+                </ul>
+            </li>
+            <li>v0.0.3
+                <ul>
+                    <li>Fixed an error with single character field names.</li>
+                    <li>New action to generate all data class methods at once.</li>
+                    <li>Optimized copy method option for Redux architecture.</li>
+                    <li>Added key transformation function to map methods.</li>
+                    <li>Const qualifier for classes with final-only fields.</li>
+                </ul>
+            </li>
+            <li>v0.0.2
+                <ul>
+                    <li>Plugin.xml configuration problems fix.</li>
+                </ul>
+            </li>
+            <li>v0.0.1
+                <ul>
+                    <li>First stable version released. See description for details.</li>
+                </ul>
+            </li>
+        </ul>
+    ]]>
+    </change-notes>
+
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectConfigurable
+                groupId="editor"
+                instance="andrasferenczi.configuration.DataClassConfigurable"
+        />
+    </extensions>
+
+    <actions>
+        <action id="andrasferenczi.action.NamedArgumentConstructorAction"
+                class="andrasferenczi.action.NamedArgumentConstructorAction"
+                text="Named Argument Constructor">
+            <add-to-group group-id="GenerateGroup"
+                          anchor="after"
+                          relative-to-action="Generate.Named.Constructor.Dart"/>
+        </action>
+        <action id="andrasferenczi.action.DartCopyWithAction"
+                class="andrasferenczi.action.DartCopyWithAction"
+                text="Copy">
+            <add-to-group group-id="GenerateGroup"
+                          anchor="after"
+                          relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
+        </action>
+        <action id="andrasferenczi.action.MapAction"
+                class="andrasferenczi.action.MapAction"
+                text="toMap() and fromMap()">
+            <add-to-group group-id="GenerateGroup"
+                          anchor="after"
+                          relative-to-action="andrasferenczi.action.DartCopyWithAction"/>
+        </action>
+        <action id="andrasferenczi.action.FullDataAction"
+                class="andrasferenczi.action.FullDataAction"
+                text="Data Class Section">
+            <add-to-group group-id="GenerateGroup"
+                          anchor="after"
+                          relative-to-action="andrasferenczi.action.MapAction"/>
+        </action>
+    </actions>
+</idea-plugin>
