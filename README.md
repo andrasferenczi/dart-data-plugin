@@ -47,10 +47,10 @@ class Person {
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   const Person({
-    @required this.id,
-    @required this.age,
-    @required String firstName,
-    @required String lastName,
+    required this.id,
+    required this.age,
+    required String firstName,
+    required String lastName,
   })  : _firstName = firstName,
         _lastName = lastName;
 
@@ -124,7 +124,7 @@ class Person {
 You can find additional settings under `Settings` > `Editor` > `Dart Data Class Plugin` where you have the following customization options:
 
 - set the name of the copy method
-- use `@required` annotation
+- use `required` annotation
 - use `new` keyword when instantiation
 - use the `const` keyword for the constructor generation - all fields in the class have to be final
 - copy function can be specified to return the same instance. This Option has the same requirement as the const keyword. Useful when using Dart in a Redux architecture.

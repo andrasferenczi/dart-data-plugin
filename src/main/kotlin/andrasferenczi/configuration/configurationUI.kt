@@ -44,7 +44,7 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
     )
 
     val useRequiredAnnotationCheckBox = JCheckBox(
-        "add @required to constructor parameters",
+        "add required to constructor parameters",
         input.useRequiredAnnotation
     )
     // ROW 2

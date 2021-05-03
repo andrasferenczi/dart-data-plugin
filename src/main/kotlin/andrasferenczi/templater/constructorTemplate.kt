@@ -37,7 +37,7 @@ fun createConstructorTemplate(
 
                     publicVariableNames.forEach {
                         if (addRequiredAnnotation) {
-                            addTextSegment("@required")
+                            addTextSegment("required")
                             addSpace()
                         }
 
@@ -49,7 +49,7 @@ fun createConstructorTemplate(
 
                     privateVariables.forEach {
                         if (addRequiredAnnotation) {
-                            addTextSegment("@required")
+                            addTextSegment("required")
                             addSpace()
                         }
 
