@@ -55,10 +55,10 @@ class Person {
         _lastName = lastName;
 
   Person copyWith({
-    int id,
-    String firstName,
-    String lastName,
-    int age,
+    int? id,
+    String? firstName,
+    String? lastName,
+    int? age,
   }) {
     if ((id == null || identical(id, this.id)) &&
         (firstName == null || identical(firstName, this._firstName)) &&

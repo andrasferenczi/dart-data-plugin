@@ -35,7 +35,7 @@ fun createCopyWithConstructorTemplate(
                     addNewLine()
 
                     variables.forEach {
-                        addTextSegment(it.type)
+                        addTextSegment(toOptionalType(it.type))
                         addTextSegment(" ")
                         addTextSegment(it.publicVariableName)
                         addTextSegment(",")
@@ -130,4 +130,10 @@ fun createCopyWithConstructorTemplate(
         addSpace()
     }
 
+}
+
+private fun toOptionalType(type: String): String {
+    if (type.endsWith("?"))
+        return type
+    return "$type?";
 }
