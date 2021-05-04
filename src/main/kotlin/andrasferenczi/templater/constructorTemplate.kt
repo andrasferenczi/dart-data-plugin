@@ -36,7 +36,7 @@ fun createConstructorTemplate(
                     addNewLine()
 
                     publicVariableNames.forEach {
-                        if (addRequiredAnnotation) {
+                        if (addRequiredAnnotation || it.isFinal) {
                             addTextSegment("required")
                             addSpace()
                         }
