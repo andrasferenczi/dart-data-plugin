@@ -1,9 +1,12 @@
 package andrasferenczi.action.init
 
+import andrasferenczi.constants.Constants
+import com.intellij.notification.Notification
+import com.intellij.notification.NotificationType
+import com.intellij.notification.Notifications
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
-import com.intellij.openapi.ui.Messages
 import com.jetbrains.lang.dart.psi.DartFile
 
 
@@ -15,9 +18,13 @@ fun tryCreateActionData(
 
     if (project === null) {
         if (feedbackOnError) {
-            Messages.showErrorDialog(
-                "Project instance could not be retrieved",
-                "Internal error"
+            Notifications.Bus.notify(
+                Notification(
+                    Constants.NOTIFICATION_ID,
+                    "Internal error",
+                    "Project instance could not be retrieved",
+                    NotificationType.ERROR
+                )
             )
         }
         return null
@@ -27,9 +34,13 @@ fun tryCreateActionData(
 
     if (editor === null) {
         if (feedbackOnError) {
-            Messages.showErrorDialog(
-                "Editor instance could not be retrieved",
-                "Internal error"
+            Notifications.Bus.notify(
+                Notification(
+                    Constants.NOTIFICATION_ID,
+                    "Internal error",
+                    "Editor instance could not be retrieved",
+                    NotificationType.ERROR
+                )
             )
         }
         return null
@@ -40,9 +51,13 @@ fun tryCreateActionData(
 
     if (dartFile !is DartFile) {
         if (feedbackOnError) {
-            Messages.showErrorDialog(
-                "Could not cast the given file type to the DartFile class, aborting action.",
-                "Dart file not recognized"
+            Notifications.Bus.notify(
+                Notification(
+                    Constants.NOTIFICATION_ID,
+                    "Dart file not recognized",
+                    "Could not cast the given file type to the DartFile class, aborting action.",
+                    NotificationType.ERROR
+                )
             )
         }
         return null
@@ -52,9 +67,13 @@ fun tryCreateActionData(
 
     if (caret == null) {
         if (feedbackOnError) {
-            Messages.showErrorDialog(
-                "The caret was not provided by the environment.",
-                "No caret detected"
+            Notifications.Bus.notify(
+                Notification(
+                    Constants.NOTIFICATION_ID,
+                    "No caret detected",
+                    "The caret was not provided by the environment.",
+                    NotificationType.ERROR
+                )
             )
         }
         return null

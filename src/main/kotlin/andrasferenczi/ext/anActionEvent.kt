@@ -1,6 +1,5 @@
 package andrasferenczi.ext
 
-import andrasferenczi.ext.psi.findFirstParentOfType
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.editor.Editor
@@ -16,6 +15,20 @@ val AnActionEvent.editorAndPsiFile: Pair<Editor?, PsiFile?>
         val psiFile = getData(CommonDataKeys.PSI_FILE)
         return editor to psiFile
     }
+
+fun AnActionEvent.isInDartFile(): Boolean {
+    val (editor, psiFile) = editorAndPsiFile
+
+    if (editor == null || psiFile === null) {
+        return false
+    }
+
+    if (psiFile.name.substringAfterLast(".") != "dart") {
+        return false
+    }
+
+    return true
+}
 
 fun AnActionEvent.extractOuterDartClass(): DartClass? {
     val (editor, psiFile) = editorAndPsiFile

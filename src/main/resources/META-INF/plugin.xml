@@ -1,13 +1,14 @@
 <idea-plugin>
     <id>andrasferenczi.dart-data-plugin</id>
     <name>Dart Data Class</name>
-    <vendor url="https://github.com/andrasferenczi/dart-data-plugin">Andras Ferenczi</vendor>
+    <vendor email="a.ferenczi.andras@gmail.com">Andras Ferenczi</vendor>
 
     <depends>Dart</depends>
     <!--    To prevent it from being legacy-->
     <depends>com.intellij.modules.lang</depends>
 
-    <idea-version since-build="193"/>
+    <!-- 2018.3 - Based on Jetbrain's compatibility verification -->
+    <idea-version since-build="183"/>
 
     <description><![CDATA[
         <p>Essential utility methods generator for Dart data classes.</p>
@@ -29,10 +30,14 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>v0.0.5
+            <li>v0.1.1
                 <ul>
-                    <li>Added defaultstate="collapsed" for editor-fold comment</li>
-                    <li>Icon</li>
+                    <li>Spread action generator takes class fields into account too.</li>
+                </ul>
+            </li>
+            <li>v0.1.0
+                <ul>
+                    <li>NEW: Spread action added for easy function calls with same-named parameters.</li>
                 </ul>
             </li>
             <li>v0.0.4
@@ -105,6 +110,18 @@
             <add-to-group group-id="GenerateGroup"
                           anchor="after"
                           relative-to-action="andrasferenczi.action.MapAction"/>
+        </action>
+
+        <!-- Spread -->
+
+        <action id="andrasferenczi.intention.SpreadAction"
+                class="andrasferenczi.intention.SpreadAction"
+                text="Spread"
+                description="Assign the matching properties by name to the receiving function">
+            <add-to-group
+                    group-id="GenerateGroup"
+                    anchor="before"
+                    relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
         </action>
     </actions>
 </idea-plugin>
