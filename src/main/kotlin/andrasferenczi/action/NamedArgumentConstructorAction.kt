@@ -35,12 +35,13 @@ class NamedArgumentConstructorAction : BaseAnAction() {
 
             val publicVariables: List<PublicVariableTemplateParam> = declarations
                 .filter { it.isPublic }
-                .map { PublicVariableTemplateParamImpl(it.variableName) }
+                .map { PublicVariableTemplateParamImpl(isFinal = it.isFinal, variableName = it.variableName) }
 
             val privateVariables: List<AliasedVariableTemplateParam> = declarations
                 .filter { it.isPrivate }
                 .map {
                     AliasedVariableTemplateParamImpl(
+                        isFinal = it.isFinal,
                         variableName = it.variableName,
                         type = it.fullTypeName
                             ?: throw RuntimeException("No type is available - this variable should not be assignable from constructor"),

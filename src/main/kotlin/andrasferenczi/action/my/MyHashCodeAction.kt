@@ -3,6 +3,7 @@ package andrasferenczi.action.my
 import andrasferenczi.action.StaticActionProcessor
 import andrasferenczi.action.data.GenerationData
 import andrasferenczi.action.data.PerformAction
+import andrasferenczi.declaration.isFinal
 import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.psi.findChildrenByType
 import andrasferenczi.templater.HashCodeTemplateParams
@@ -36,7 +37,7 @@ class MyHashCodeAction {
             val template = createHashCodeTemplate(
                 templateManager = templateManager,
                 params = HashCodeTemplateParams(
-                    declarations.map { NamedVariableTemplateParamImpl(it.variableName) }
+                    declarations.map { NamedVariableTemplateParamImpl(isFinal = it.isFinal, variableName = it.variableName) }
                 )
             )
 

@@ -1,11 +1,13 @@
 package andrasferenczi.templater
 
 interface NamedVariableTemplateParam {
+    val isFinal: Boolean
     // By the name it can be accessed with this.__name__
     val variableName: String
 }
 
 class NamedVariableTemplateParamImpl(
+    override val isFinal: Boolean,
     override val variableName: String
 ) : NamedVariableTemplateParam
 
@@ -36,10 +38,12 @@ val AliasedVariableTemplateParam.mapKeyString: String
 
 // Classes
 data class PublicVariableTemplateParamImpl(
+    override val isFinal: Boolean,
     override val variableName: String
 ) : PublicVariableTemplateParam
 
 data class AliasedVariableTemplateParamImpl(
+    override val isFinal: Boolean,
     override val variableName: String,
     override val type: String,
     override val publicVariableName: String
