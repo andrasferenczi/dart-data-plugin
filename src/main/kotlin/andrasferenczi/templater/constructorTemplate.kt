@@ -9,7 +9,8 @@ data class ConstructorTemplateParams(
     val publicVariables: List<PublicVariableTemplateParam>,
     val privateVariables: List<AliasedVariableTemplateParam>,
     val addRequiredAnnotation: Boolean,
-    val addConstQualifier: Boolean
+    val addConstQualifier: Boolean,
+    val nullSafety: Boolean
 )
 
 fun createConstructorTemplate(

@@ -9,7 +9,8 @@ data class CopyWithTemplateParams(
     val variables: List<AliasedVariableTemplateParam>,
     val copyWithMethodName: String,
     val useNewKeyword: Boolean,
-    val generateOptimizedCopy: Boolean
+    val generateOptimizedCopy: Boolean,
+    val nullSafety: Boolean
 )
 
 fun createCopyWithConstructorTemplate(
@@ -36,6 +37,9 @@ fun createCopyWithConstructorTemplate(
 
                     variables.forEach {
                         addTextSegment(it.type)
+                        if (params.nullSafety) {
+                            addTextSegment("?")
+                        }
                         addTextSegment(" ")
                         addTextSegment(it.publicVariableName)
                         addTextSegment(",")

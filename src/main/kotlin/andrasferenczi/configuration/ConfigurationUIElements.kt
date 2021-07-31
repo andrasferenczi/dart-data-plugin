@@ -5,7 +5,7 @@ import javax.swing.JComponent
 import javax.swing.JTextField
 
 // Output
-class ConfigurationUIElements(
+class ConfigurationUIElements constructor(
     val jComponent: JComponent,
 
     val copyWithNameTextField: JTextField,
@@ -14,7 +14,8 @@ class ConfigurationUIElements(
     val useConstKeywordForConstructorCheckbox: JCheckBox,
     val optimizeConstCopyCheckbox: JCheckBox,
     val addKeyMapperForMapCheckbox: JCheckBox,
-    val noImplicitCastsCheckbox: JCheckBox
+    val noImplicitCastsCheckbox: JCheckBox,
+    val nullSafety: JCheckBox
 ) {
 
 
@@ -26,7 +27,8 @@ class ConfigurationUIElements(
             useConstForConstructor = useConstKeywordForConstructorCheckbox.isSelected,
             optimizeConstCopy = optimizeConstCopyCheckbox.isSelected,
             addKeyMapperForMap = addKeyMapperForMapCheckbox.isSelected,
-            noImplicitCasts = noImplicitCastsCheckbox.isSelected
+            noImplicitCasts = noImplicitCastsCheckbox.isSelected,
+            nullSafety = nullSafety.isSelected
         )
     }
 
@@ -38,6 +40,7 @@ class ConfigurationUIElements(
         optimizeConstCopyCheckbox.isSelected = configurationData.optimizeConstCopy
         addKeyMapperForMapCheckbox.isSelected = configurationData.addKeyMapperForMap
         noImplicitCastsCheckbox.isSelected = configurationData.noImplicitCasts
+        nullSafety.isSelected = configurationData.nullSafety
     }
 
 }
