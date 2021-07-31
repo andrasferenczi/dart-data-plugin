@@ -18,7 +18,7 @@ data class ConfigurationData constructor(
         val DEFAULT_DATA = ConfigurationData(
             copyWithMethodName = TemplateConstants.COPYWITH_DEFAULT_METHOD_NAME,
             useRequiredAnnotation = true,
-            useNewKeyword = true,
+            useNewKeyword = false,
             useConstForConstructor = true,
             optimizeConstCopy = false,
             addKeyMapperForMap = false,
@@ -28,7 +28,6 @@ data class ConfigurationData constructor(
 
         val TEST_DATA = DEFAULT_DATA.copy(
             copyWithMethodName = "testData",
-            useNewKeyword = false,
             useConstForConstructor = false
         )
 
