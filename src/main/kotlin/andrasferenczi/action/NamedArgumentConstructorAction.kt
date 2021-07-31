@@ -1,8 +1,8 @@
 package andrasferenczi.action
 
-import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.data.GenerationData
 import andrasferenczi.action.data.PerformAction
+import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.utils.createConstructorDeleteCallWithUserPrompt
 import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
@@ -59,8 +59,10 @@ class NamedArgumentConstructorAction : BaseAnAction() {
                     className = dartClassName,
                     publicVariables = publicVariables,
                     privateVariables = privateVariables,
-                    addRequiredAnnotation = configuration.useRequiredAnnotation,
-                    addConstQualifier = addConstQualifier
+                    addRequiredAnnotation = configuration.useRequiredAnnotation
+                            && !configuration.nullSafety,
+                    addConstQualifier = addConstQualifier,
+                    nullSafety = configuration.nullSafety
                 )
             )
 
