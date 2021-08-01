@@ -111,17 +111,5 @@
                           anchor="after"
                           relative-to-action="andrasferenczi.action.MapAction"/>
         </action>
-
-        <!-- Spread -->
-
-        <action id="andrasferenczi.intention.SpreadAction"
-                class="andrasferenczi.intention.SpreadAction"
-                text="Spread"
-                description="Assign the matching properties by name to the receiving function">
-            <add-to-group
-                    group-id="GenerateGroup"
-                    anchor="before"
-                    relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
-        </action>
     </actions>
 </idea-plugin>
