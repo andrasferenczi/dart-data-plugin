@@ -8,6 +8,7 @@ import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
 import andrasferenczi.declaration.allMembersFinal
 import andrasferenczi.declaration.fullTypeName
+import andrasferenczi.declaration.isNullable
 import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.psi.extractClassName
 import andrasferenczi.templater.AliasedVariableTemplateParam
@@ -45,7 +46,8 @@ class DartCopyWithAction : BaseAnAction() {
                         variableName = it.variableName,
                         type = it.fullTypeName
                             ?: throw RuntimeException("No type is available - this variable should not be assignable from constructor"),
-                        publicVariableName = it.publicVariableName
+                        publicVariableName = it.publicVariableName,
+                        isNullable = it.isNullable
                     )
                 }
 

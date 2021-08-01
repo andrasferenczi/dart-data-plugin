@@ -45,7 +45,7 @@ fun VariableDeclarationPsiElements.hasModifier(modifier: DeclarationModifier): B
 }
 
 val VariableDeclarationPsiElements.fullTypeName: String?
-    get() = dartType?.text
+    get() = dartType?.text?.substringBeforeLast("?")
 
 val VariableDeclarationPsiElements.hasInitializer: Boolean
     get() = initializer !== null
@@ -70,6 +70,9 @@ val VariableDeclarationPsiElements.isMember: Boolean
 
 val VariableDeclarationPsiElements.isFinal: Boolean
     get() = hasModifier(DeclarationModifier.Final)
+
+val VariableDeclarationPsiElements.isNullable: Boolean
+    get() = dartType?.text?.endsWith("?") ?: false
 
 val VariableDeclarationPsiElements.canBeAssignedFromConstructor: Boolean
     get() {

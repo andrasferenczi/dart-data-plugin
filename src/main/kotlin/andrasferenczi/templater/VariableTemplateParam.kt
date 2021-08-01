@@ -3,10 +3,12 @@ package andrasferenczi.templater
 interface NamedVariableTemplateParam {
     // By the name it can be accessed with this.__name__
     val variableName: String
+    val isNullable: Boolean
 }
 
 class NamedVariableTemplateParamImpl(
-    override val variableName: String
+    override val variableName: String,
+    override val isNullable: Boolean
 ) : NamedVariableTemplateParam
 
 interface TypedVariableTemplateParam : NamedVariableTemplateParam {
@@ -36,11 +38,13 @@ val AliasedVariableTemplateParam.mapKeyString: String
 
 // Classes
 data class PublicVariableTemplateParamImpl(
-    override val variableName: String
+    override val variableName: String,
+    override val isNullable: Boolean
 ) : PublicVariableTemplateParam
 
 data class AliasedVariableTemplateParamImpl(
     override val variableName: String,
     override val type: String,
-    override val publicVariableName: String
+    override val publicVariableName: String,
+    override val isNullable: Boolean
 ) : AliasedVariableTemplateParam

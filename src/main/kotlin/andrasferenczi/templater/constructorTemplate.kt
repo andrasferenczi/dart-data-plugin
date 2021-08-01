@@ -17,7 +17,14 @@ fun createConstructorTemplate(
     templateManager: TemplateManager,
     params: ConstructorTemplateParams
 ): Template {
-    val (className, publicVariableNames, privateVariables, addRequiredAnnotation, addConstQualifier) = params
+    val (
+        className,
+        publicVariableNames,
+        privateVariables,
+        addRequiredAnnotation,
+        addConstQualifier,
+        nullSafety
+    ) = params
 
     return templateManager.createTemplate(
         TemplateType.NamedParameterConstructor.templateKey,
@@ -41,6 +48,10 @@ fun createConstructorTemplate(
                             addTextSegment("@required")
                             addSpace()
                         }
+                        if (nullSafety && !it.isNullable) {
+                            addTextSegment("required")
+                            addSpace()
+                        }
 
                         addTextSegment("this.")
                         addTextSegment(it.variableName)
@@ -53,9 +64,16 @@ fun createConstructorTemplate(
                             addTextSegment("@required")
                             addSpace()
                         }
+                        if (nullSafety) {
+                            addTextSegment("required")
+                            addSpace()
+                        }
 
                         // No this
                         addTextSegment(it.type)
+                        if (nullSafety && it.isNullable) {
+                            addTextSegment("?")
+                        }
                         addSpace()
                         addTextSegment(it.publicVariableName)
                         addComma()
