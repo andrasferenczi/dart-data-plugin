@@ -13,17 +13,6 @@ This plugin can generate the following code:
 - `fromMap`: constructs your class from a `Map<String, dynamic>` using the named argument constructor
 - all of the above with `toString`, `equals` (`==` operator), `hashcode`
 
-## New: Spread Generator
-
-Data classes that have the same name do not have to be written by hand.
-
-Let the plugin generate the mapping for you!
-
-![ScreenShot](img/dart-spread-usage.gif)
-
-*Has some limitations unfortunately, but it works in simple cases.*
-
-
 ## Example
 
 Let's say you have a class called `Person` with the properties:
