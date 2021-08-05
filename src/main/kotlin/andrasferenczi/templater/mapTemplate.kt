@@ -58,7 +58,7 @@ private fun Template.addToMap(params: MapTemplateParams) {
         if (addKeyMapper) {
             withCurlyBraces {
                 addNewLine()
-                addTextSegment("String ${TemplateConstants.KEYMAPPER_VARIABLE_NAME}(String key)")
+                addTextSegment("String Function(String key)? ${TemplateConstants.KEYMAPPER_VARIABLE_NAME}")
                 addComma()
                 addNewLine()
             }
@@ -127,14 +127,9 @@ private fun Template.addFromMap(
             addSpace()
             withCurlyBraces {
                 addNewLine()
-                addTextSegment("String")
+                addTextSegment("String Function(String ${TemplateConstants.KEY_VARIABLE_NAME})?")
                 addSpace()
                 addTextSegment(TemplateConstants.KEYMAPPER_VARIABLE_NAME)
-                withParentheses {
-                    addTextSegment("String")
-                    addSpace()
-                    addTextSegment(TemplateConstants.KEY_VARIABLE_NAME)
-                }
                 addComma()
                 addNewLine()
             }

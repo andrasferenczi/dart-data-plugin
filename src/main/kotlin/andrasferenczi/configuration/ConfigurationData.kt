@@ -4,34 +4,31 @@ import andrasferenczi.templater.TemplateConstants
 
 // Input
 // Default values
-data class ConfigurationData(
+data class ConfigurationData constructor(
     val copyWithMethodName: String,
     val useRequiredAnnotation: Boolean,
     val useNewKeyword: Boolean,
     val useConstForConstructor: Boolean,
     val optimizeConstCopy: Boolean,
     val addKeyMapperForMap: Boolean,
-    val noImplicitCasts: Boolean
+    val noImplicitCasts: Boolean,
+    val nullSafety: Boolean
 ) {
     companion object {
         val DEFAULT_DATA = ConfigurationData(
             copyWithMethodName = TemplateConstants.COPYWITH_DEFAULT_METHOD_NAME,
             useRequiredAnnotation = true,
-            useNewKeyword = true,
+            useNewKeyword = false,
             useConstForConstructor = true,
             optimizeConstCopy = false,
             addKeyMapperForMap = false,
-            noImplicitCasts = true
+            noImplicitCasts = true,
+            nullSafety = true
         )
 
-        val TEST_DATA = ConfigurationData(
+        val TEST_DATA = DEFAULT_DATA.copy(
             copyWithMethodName = "testData",
-            useRequiredAnnotation = true,
-            useNewKeyword = false,
-            useConstForConstructor = false,
-            optimizeConstCopy = false,
-            addKeyMapperForMap = false,
-            noImplicitCasts = true
+            useConstForConstructor = false
         )
 
     }

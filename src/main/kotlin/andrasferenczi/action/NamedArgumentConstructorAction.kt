@@ -1,8 +1,8 @@
 package andrasferenczi.action
 
-import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.data.GenerationData
 import andrasferenczi.action.data.PerformAction
+import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.utils.createConstructorDeleteCallWithUserPrompt
 import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
@@ -35,7 +35,12 @@ class NamedArgumentConstructorAction : BaseAnAction() {
 
             val publicVariables: List<PublicVariableTemplateParam> = declarations
                 .filter { it.isPublic }
-                .map { PublicVariableTemplateParamImpl(it.variableName) }
+                .map {
+                    PublicVariableTemplateParamImpl(
+                        it.variableName,
+                        isNullable = it.isNullable
+                    )
+                }
 
             val privateVariables: List<AliasedVariableTemplateParam> = declarations
                 .filter { it.isPrivate }
@@ -44,7 +49,8 @@ class NamedArgumentConstructorAction : BaseAnAction() {
                         variableName = it.variableName,
                         type = it.fullTypeName
                             ?: throw RuntimeException("No type is available - this variable should not be assignable from constructor"),
-                        publicVariableName = it.publicVariableName
+                        publicVariableName = it.publicVariableName,
+                        isNullable = it.isNullable
                     )
                 }
 
@@ -59,8 +65,10 @@ class NamedArgumentConstructorAction : BaseAnAction() {
                     className = dartClassName,
                     publicVariables = publicVariables,
                     privateVariables = privateVariables,
-                    addRequiredAnnotation = configuration.useRequiredAnnotation,
-                    addConstQualifier = addConstQualifier
+                    addRequiredAnnotation = configuration.useRequiredAnnotation
+                            && !configuration.nullSafety,
+                    addConstQualifier = addConstQualifier,
+                    nullSafety = configuration.nullSafety
                 )
             )
 

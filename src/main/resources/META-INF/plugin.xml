@@ -30,9 +30,9 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>v0.1.1
+            <li>v0.2.0
                 <ul>
-                    <li>Spread action generator takes class fields into account too.</li>
+                    <li>Null-safety support</li>
                 </ul>
             </li>
             <li>v0.1.0
@@ -110,18 +110,6 @@
             <add-to-group group-id="GenerateGroup"
                           anchor="after"
                           relative-to-action="andrasferenczi.action.MapAction"/>
-        </action>
-
-        <!-- Spread -->
-
-        <action id="andrasferenczi.intention.SpreadAction"
-                class="andrasferenczi.intention.SpreadAction"
-                text="Spread"
-                description="Assign the matching properties by name to the receiving function">
-            <add-to-group
-                    group-id="GenerateGroup"
-                    anchor="before"
-                    relative-to-action="andrasferenczi.action.NamedArgumentConstructorAction"/>
         </action>
     </actions>
 </idea-plugin>

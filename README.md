@@ -13,17 +13,6 @@ This plugin can generate the following code:
 - `fromMap`: constructs your class from a `Map<String, dynamic>` using the named argument constructor
 - all of the above with `toString`, `equals` (`==` operator), `hashcode`
 
-## New: Spread Generator
-
-Data classes that have the same name do not have to be written by hand.
-
-Let the plugin generate the mapping for you!
-
-![ScreenShot](img/dart-spread-usage.gif)
-
-*Has some limitations unfortunately, but it works in simple cases.*
-
-
 ## Example
 
 Let's say you have a class called `Person` with the properties:
@@ -33,6 +22,7 @@ class Person {
   final int id;
   final String _firstName, _lastName;
   final int age;
+  int? income;
 
   String get name => _firstName + " " + _lastName;
 }
@@ -48,41 +38,39 @@ class Person {
   final int id;
   final String _firstName, _lastName;
   final int age;
+  int? income;
 
   String get name => _firstName + " " + _lastName;
 
 //<editor-fold desc="Data Methods">
 
-
-  const Person({
-    @required this.id,
-    @required this.age,
-    @required String firstName,
-    @required String lastName,
-  })
-      : _firstName = firstName,
+  Person({
+    required this.id,
+    required this.age,
+    this.income,
+    required String firstName,
+    required String lastName,
+  })  : _firstName = firstName,
         _lastName = lastName;
-
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          (other is Person &&
-              runtimeType == other.runtimeType &&
-              id == other.id &&
-              _firstName == other._firstName &&
-              _lastName == other._lastName &&
-              age == other.age
-          );
-
+      (other is Person &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          _firstName == other._firstName &&
+          _lastName == other._lastName &&
+          age == other.age &&
+          income == other.income);
 
   @override
   int get hashCode =>
       id.hashCode ^
       _firstName.hashCode ^
       _lastName.hashCode ^
-      age.hashCode;
-
+      age.hashCode ^
+      income.hashCode;
 
   @override
   String toString() {
@@ -91,58 +79,45 @@ class Person {
         ' _firstName: $_firstName,' +
         ' _lastName: $_lastName,' +
         ' age: $age,' +
+        ' income: $income,' +
         '}';
   }
 
-
   Person copyWith({
-    int id,
-    String firstName,
-    String lastName,
-    int age,
+    int? id,
+    String? firstName,
+    String? lastName,
+    int? age,
+    int? income,
   }) {
-    if ((id == null || identical(id, this.id)) &&
-        (firstName == null || identical(firstName, this._firstName)) &&
-        (lastName == null || identical(lastName, this._lastName)) &&
-        (age == null || identical(age, this.age))) {
-      return this;
-    }
-
     return Person(
       id: id ?? this.id,
       firstName: firstName ?? this._firstName,
       lastName: lastName ?? this._lastName,
       age: age ?? this.age,
+      income: income ?? this.income,
     );
   }
 
-
-  Map<String, dynamic> toMap({
-    String keyMapper(String key),
-  }) {
-    keyMapper ??= (key) => key;
-
+  Map<String, dynamic> toMap() {
     return {
-      keyMapper('id'): this.id,
-      keyMapper('_firstName'): this._firstName,
-      keyMapper('_lastName'): this._lastName,
-      keyMapper('age'): this.age,
+      'id': this.id,
+      '_firstName': this._firstName,
+      '_lastName': this._lastName,
+      'age': this.age,
+      'income': this.income,
     };
   }
 
-  factory Person.fromMap(Map<String, dynamic> map, {
-    String keyMapper(String key),
-  }) {
-    keyMapper ??= (key) => key;
-
+  factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
-      id: map[keyMapper('id')],
-      firstName: map[keyMapper('_firstName')],
-      lastName: map[keyMapper('_lastName')],
-      age: map[keyMapper('age')],
+      id: map['id'] as int,
+      firstName: map['_firstName'] as String,
+      lastName: map['_lastName'] as String,
+      age: map['age'] as int,
+      income: map['income'] as int?,
     );
   }
-
 
 //</editor-fold>
 }

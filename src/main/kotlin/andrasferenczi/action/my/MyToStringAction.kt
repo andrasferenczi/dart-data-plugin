@@ -3,6 +3,7 @@ package andrasferenczi.action.my
 import andrasferenczi.action.StaticActionProcessor
 import andrasferenczi.action.data.GenerationData
 import andrasferenczi.action.data.PerformAction
+import andrasferenczi.declaration.isNullable
 import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.psi.extractClassName
 import andrasferenczi.ext.psi.findMethodsByName
@@ -36,7 +37,12 @@ class MyToStringAction {
                 templateManager = templateManager,
                 params = ToStringTemplateParams(
                     className = dartClassName,
-                    variables = declarations.map { NamedVariableTemplateParamImpl(it.variableName) }
+                    variables = declarations.map {
+                        NamedVariableTemplateParamImpl(
+                            it.variableName,
+                            isNullable = it.isNullable
+                        )
+                    }
                 )
             )
 

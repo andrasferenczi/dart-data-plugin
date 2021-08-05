@@ -3,7 +3,10 @@ package andrasferenczi.configuration
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
-import javax.swing.*
+import javax.swing.JCheckBox
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JTextField
 
 // Insets
 private const val TOP_INSET = 10
@@ -132,13 +135,28 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         }
     )
 
+    // ROW 8
+    val nullSafetyCheckbox = JCheckBox(
+        "null safety"
+    )
+
+    pane.add(
+        nullSafetyCheckbox,
+        GridBagConstraints().apply {
+            fill = GridBagConstraints.HORIZONTAL
+            gridx = 0
+            gridy = 7
+            insets = Insets(TOP_INSET, CHECKBOX_LEFT_INSET, BOTTOM_INSET, RIGHT_INSET)
+        }
+    )
+
     // Remaining space
     pane.add(
         JPanel(),
         GridBagConstraints().apply {
             weighty = 1.0   // request any extra vertical space
             anchor = GridBagConstraints.PAGE_END // bottom of space
-            gridy = 7
+            gridy = 8
             gridwidth = 2
         }
     )
@@ -151,6 +169,7 @@ fun createConfigurationUI(input: ConfigurationData): ConfigurationUIElements {
         useConstKeywordForConstructorCheckbox,
         optimizeConstCopyCheckbox,
         addKeyMapperForMapCheckbox,
-        noImplicitCastsCheckbox
+        noImplicitCastsCheckbox,
+        nullSafetyCheckbox
     )
 }

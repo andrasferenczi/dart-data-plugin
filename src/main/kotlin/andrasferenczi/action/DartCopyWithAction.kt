@@ -1,16 +1,20 @@
 package andrasferenczi.action
 
-import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.data.GenerationData
 import andrasferenczi.action.data.PerformAction
+import andrasferenczi.action.init.ActionData
 import andrasferenczi.action.utils.createCopyWithDeleteCall
 import andrasferenczi.action.utils.selectFieldsWithDialog
 import andrasferenczi.configuration.ConfigurationDataManager
 import andrasferenczi.declaration.allMembersFinal
 import andrasferenczi.declaration.fullTypeName
+import andrasferenczi.declaration.isNullable
 import andrasferenczi.declaration.variableName
 import andrasferenczi.ext.psi.extractClassName
-import andrasferenczi.templater.*
+import andrasferenczi.templater.AliasedVariableTemplateParam
+import andrasferenczi.templater.AliasedVariableTemplateParamImpl
+import andrasferenczi.templater.CopyWithTemplateParams
+import andrasferenczi.templater.createCopyWithConstructorTemplate
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.jetbrains.lang.dart.psi.DartClassDefinition
@@ -42,7 +46,8 @@ class DartCopyWithAction : BaseAnAction() {
                         variableName = it.variableName,
                         type = it.fullTypeName
                             ?: throw RuntimeException("No type is available - this variable should not be assignable from constructor"),
-                        publicVariableName = it.publicVariableName
+                        publicVariableName = it.publicVariableName,
+                        isNullable = it.isNullable
                     )
                 }
 
@@ -58,7 +63,8 @@ class DartCopyWithAction : BaseAnAction() {
                     variables = variableNames,
                     copyWithMethodName = configuration.copyWithMethodName,
                     useNewKeyword = configuration.useNewKeyword,
-                    generateOptimizedCopy = generateOptimizedCopy
+                    generateOptimizedCopy = generateOptimizedCopy,
+                    nullSafety = configuration.nullSafety
                 )
             )
 
