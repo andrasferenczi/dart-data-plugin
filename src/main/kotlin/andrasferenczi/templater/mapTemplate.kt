@@ -155,26 +155,23 @@ private fun Template.addFromMap(
                 addTextSegment(it.publicVariableName)
                 addTextSegment(":")
                 addSpace()
-                addTextSegment(TemplateConstants.MAP_VARIABLE_NAME)
 
-                withBrackets {
-                    "'${it.mapKeyString}'".also { keyParam ->
-                        if (addKeyMapper) {
-                            addTextSegment(TemplateConstants.KEYMAPPER_VARIABLE_NAME)
-                            withParentheses {
-                                addTextSegment(keyParam)
-                            }
-                        } else {
-                            addTextSegment(keyParam)
-                        }
+                if (it.type == TemplateConstants.DATETIME_TYPE) {
+                    addTextSegment(TemplateConstants.DATETIME_TYPE)
+                    addDot()
+                    addTextSegment(TemplateConstants.TRY_PARSE_METHOD_NAME)
+                    withParentheses {
+                        addMapSegment(it, addKeyMapper)
                     }
-                }
+                } else {
+                    addMapSegment(it, addKeyMapper)
 
-                if(noImplicitCasts) {
-                    addSpace()
-                    addTextSegment("as")
-                    addSpace()
-                    addTextSegment(it.type)
+                    if (noImplicitCasts) {
+                        addSpace()
+                        addTextSegment("as")
+                        addSpace()
+                        addTextSegment(it.type)
+                    }
                 }
 
                 addComma()
@@ -182,5 +179,24 @@ private fun Template.addFromMap(
             }
         }
         addSemicolon()
+    }
+}
+
+private fun Template.addMapSegment(
+    it: AliasedVariableTemplateParam,
+    addKeyMapper: Boolean
+) {
+    addTextSegment(TemplateConstants.MAP_VARIABLE_NAME)
+    withBrackets {
+        "'${it.mapKeyString}'".also { keyParam ->
+            if (addKeyMapper) {
+                addTextSegment(TemplateConstants.KEYMAPPER_VARIABLE_NAME)
+                withParentheses {
+                    addTextSegment(keyParam)
+                }
+            } else {
+                addTextSegment(keyParam)
+            }
+        }
     }
 }

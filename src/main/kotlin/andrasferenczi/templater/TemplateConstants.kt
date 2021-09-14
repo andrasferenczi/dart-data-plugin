@@ -19,4 +19,7 @@ object TemplateConstants {
     const val TO_STRING_METHOD_NAME = "toString"
     const val EQUALS_OPERATOR_METHOD_NAME = "=="
     const val HASHCODE_NAME = "hashCode"
+
+    const val DATETIME_TYPE = "DateTime"
+    const val TRY_PARSE_METHOD_NAME = "tryParse"
 }

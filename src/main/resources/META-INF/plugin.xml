@@ -30,6 +30,11 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>v0.3.0
+                <ul>
+                    <li>Use DateTime.tryParse in DateTime types</li>
+                </ul>
+            </li>
             <li>v0.2.0
                 <ul>
                     <li>Null-safety support</li>
