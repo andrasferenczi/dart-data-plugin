@@ -2,7 +2,11 @@
 
 ![Usage](img/dart-data-usage.gif)
 
+<!-- Plugin description -->
+
 This plugin is created for those who would like to have extra data manipulation methods in their data classes without having to write boilerplate code.
+
+<!-- Plugin description end -->
 
 ![ScreenShot](img/generate-menu.png)
 

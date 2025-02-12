@@ -6,6 +6,7 @@ import andrasferenczi.action.init.tryCreateActionData
 import andrasferenczi.action.init.tryExtractDartClassDefinition
 import andrasferenczi.ext.*
 import com.intellij.codeInsight.template.TemplateManager
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.psi.PsiDocumentManager
@@ -13,13 +14,15 @@ import com.jetbrains.lang.dart.psi.DartClassDefinition
 
 abstract class BaseAnAction : AnAction() {
 
+    // Set the mode to BGT to allow access again to PsiFile and Editor
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
+    }
+
     override fun update(event: AnActionEvent) {
         event.presentation.isEnabledAndVisible =
             event.extractOuterDartClass() !== null
     }
-
-    // Actions that change PSI elements should be
-    override fun startInTransaction(): Boolean = true
 
     final override fun actionPerformed(event: AnActionEvent) {
         val actionData = tryCreateActionData(event) ?: return

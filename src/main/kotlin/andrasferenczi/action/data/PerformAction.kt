@@ -2,7 +2,6 @@ package andrasferenczi.action.data
 
 import andrasferenczi.utils.mergeCalls
 import com.intellij.codeInsight.template.Template
-import sun.misc.Perf
 
 class PerformAction(
     // Some objects might be deleted
