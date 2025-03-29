@@ -20,7 +20,7 @@ fun createConstructorDeleteCallWithUserPrompt(
         if (otherConstructorInfos.isNotEmpty()) {
             val shouldDeleteInt = Messages.showOkCancelDialog(
                 project,
-                "Constructors already exist. Do you want to the delete the existing constructors to prevent conflicts?",
+                "Constructors already exist. Do you want to delete the existing constructors to prevent conflicts?",
                 "Conflicting Constructors",
                 "Delete",
                 "Keep",
