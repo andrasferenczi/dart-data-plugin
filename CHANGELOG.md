@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.3.1]
+
+Update description
+
 ## [0.3.0]
 
 ### Added
@@ -13,5 +17,6 @@
 - Plugin not working with Intellij IDEA 2024.3.1
 - Removed unused import
 
-[Unreleased]: https://github.com/andrasferenczi/dart-data-plugin/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/andrasferenczi/dart-data-plugin/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/andrasferenczi/dart-data-plugin/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/andrasferenczi/dart-data-plugin/commits/v0.3.0
