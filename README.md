@@ -6,16 +6,16 @@
 
 This plugin is created for those who would like to have extra data manipulation methods in their data classes without having to write boilerplate code.
 
-<!-- Plugin description end -->
-
-![ScreenShot](img/generate-menu.png)
-
 This plugin can generate the following code:
 - Named Argument Constructor
 - `copyWith`: copies the instance and overrides the given parameters
 - `toMap`: converts your class into a map of `Map<String, dynamic>`
 - `fromMap`: constructs your class from a `Map<String, dynamic>` using the named argument constructor
 - all of the above with `toString`, `equals` (`==` operator), `hashcode`
+
+<!-- Plugin description end -->
+
+![ScreenShot](img/generate-menu.png)
 
 ## Example
 
