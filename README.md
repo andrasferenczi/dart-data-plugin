@@ -16,6 +16,10 @@ This plugin can generate the following code:
 - `fromMap`: constructs your class from a `Map<String, dynamic>` using the named argument constructor
 - all of the above with `toString`, `equals` (`==` operator), `hashcode`
 
+Find out more on the project's [Github page](https://github.com/andrasferenczi/dart-data-plugin?tab=readme-ov-file#example).
+
+**Not an official plugin.**
+
 <!-- Plugin description end -->
 
 ![ScreenShot](img/generate-menu.png)
