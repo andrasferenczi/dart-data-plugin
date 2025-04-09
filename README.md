@@ -1,5 +1,8 @@
 # Dart Data Class Plugin
 
+[![Version](https://img.shields.io/jetbrains/plugin/v/12429.svg)](https://plugins.jetbrains.com/plugin/12429)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/12429.svg)](https://plugins.jetbrains.com/plugin/12429)
+
 ![Usage](img/dart-data-usage.gif)
 
 <!-- Plugin description -->
