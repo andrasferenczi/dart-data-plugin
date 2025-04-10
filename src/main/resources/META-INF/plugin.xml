@@ -6,24 +6,6 @@
     <depends>Dart</depends>
     <depends>com.intellij.modules.lang</depends>
 
-    <description><![CDATA[
-        <p>Essential utility methods generator for Dart data classes.</p>
-        <br/>
-        <br/>
-        <p>Features:</p>
-        <ul>
-            <li>Named argument constructor generator</li>
-            <li>copyWith() method generator</li>
-            <li>toJson() / fromJson() methods generator</li>
-        </ul>
-
-        <p>Featured with a couple additional settings.</p>
-        <br/>
-        <p>Find out more on the project's <a href="https://github.com/andrasferenczi/dart-data-plugin">Github page</a>.</p>
-        <br/>
-        <em>Not an official plugin.<em/>
-    ]]></description>
-
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <!-- uncomment to enable plugin in all products
